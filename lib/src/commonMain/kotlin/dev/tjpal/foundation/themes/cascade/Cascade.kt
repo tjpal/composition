@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import dev.tjpal.foundation.themes.tokens.*
 
-class CascadeThemeData : ThemeData(
+class CascadeThemeData : ThemeTokens(
     background = BackgroundColor,
     buttons = buttonConfiguration(),
     typography = typographyConfiguration(),
