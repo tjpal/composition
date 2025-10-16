@@ -3,7 +3,7 @@ package dev.tjpal.foundation.themes.tokens
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-open class ThemeData(
+open class ThemeTokens(
     val background: Color = Color.White,
     val buttons: ButtonThemes = ButtonThemes(),
     val typography: Typographies = Typographies(),
@@ -15,4 +15,4 @@ open class ThemeData(
     val heatmapTheme: HeatmapTheme = HeatmapTheme(),
 )
 
-val Theme = compositionLocalOf { ThemeData() }
+val Theme = compositionLocalOf { ThemeTokens() }

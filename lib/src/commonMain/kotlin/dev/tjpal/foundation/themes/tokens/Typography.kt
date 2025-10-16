@@ -2,7 +2,6 @@ package dev.tjpal.foundation.themes.tokens
 
 import androidx.compose.ui.text.TextStyle
 
-
 data class Typography(
     val style: TextStyle = TextStyle()
 )
