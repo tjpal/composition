@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import dev.tjpal.foundation.basics.text.Text
-import dev.tjpal.foundation.themes.common.Theme
+import dev.tjpal.foundation.themes.tokens.Theme
 import dev.tjpal.foundation.utilities.NoIndication
 
 @Composable

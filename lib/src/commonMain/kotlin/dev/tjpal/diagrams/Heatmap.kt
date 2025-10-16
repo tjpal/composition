@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,8 +19,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.spacing.HorizontalDivider
 import dev.tjpal.foundation.basics.text.Text
-import dev.tjpal.foundation.themes.common.TextType
-import dev.tjpal.foundation.themes.common.Theme
+import dev.tjpal.foundation.themes.tokens.TextType
+import dev.tjpal.foundation.themes.tokens.Theme
 
 interface HeatmapRow {
     val name: String

@@ -1,13 +1,12 @@
 package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.tjpal.foundation.themes.common.CardBasicConfiguration
-import dev.tjpal.foundation.themes.common.CardHeaderConfiguration
-import dev.tjpal.foundation.themes.common.CardTheme
+import dev.tjpal.foundation.themes.tokens.CardBasicConfiguration
+import dev.tjpal.foundation.themes.tokens.CardHeaderConfiguration
+import dev.tjpal.foundation.themes.tokens.CardTheme
 
 private val CardCornerRadius = 6f.dp
 

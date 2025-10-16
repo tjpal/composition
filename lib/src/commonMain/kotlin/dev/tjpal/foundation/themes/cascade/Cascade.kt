@@ -2,7 +2,7 @@ package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import dev.tjpal.foundation.themes.common.*
+import dev.tjpal.foundation.themes.tokens.*
 
 class CascadeThemeData : ThemeData(
     background = BackgroundColor,

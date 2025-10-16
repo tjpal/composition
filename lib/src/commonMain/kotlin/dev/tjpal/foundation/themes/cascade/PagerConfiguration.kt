@@ -2,9 +2,9 @@ package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.dp
-import dev.tjpal.foundation.themes.common.PagerTheme
-import dev.tjpal.foundation.themes.common.TextType
-import dev.tjpal.foundation.themes.common.Typographies
+import dev.tjpal.foundation.themes.tokens.PagerTheme
+import dev.tjpal.foundation.themes.tokens.TextType
+import dev.tjpal.foundation.themes.tokens.Typographies
 
 fun pagerConfiguration(typographies: Typographies): PagerTheme {
     return PagerTheme(

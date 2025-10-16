@@ -1,4 +1,4 @@
-package dev.tjpal.foundation.themes.common
+package dev.tjpal.foundation.themes.tokens
 
 enum class ButtonType {
     PRIMARY,

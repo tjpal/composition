@@ -3,9 +3,9 @@ package dev.tjpal.foundation.basics.text
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.tjpal.foundation.themes.common.TextType
-import dev.tjpal.foundation.themes.common.Theme
-import dev.tjpal.foundation.themes.common.Typography
+import dev.tjpal.foundation.themes.tokens.TextType
+import dev.tjpal.foundation.themes.tokens.Theme
+import dev.tjpal.foundation.themes.tokens.Typography
 
 @Composable
 fun Text(

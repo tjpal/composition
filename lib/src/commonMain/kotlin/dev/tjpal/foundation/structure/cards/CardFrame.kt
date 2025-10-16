@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.tjpal.foundation.themes.common.Theme
-import org.jetbrains.skia.FontWidth
+import dev.tjpal.foundation.themes.tokens.Theme
 
 @Composable
 fun FullCardFrame(modifier: Modifier = Modifier, content: @Composable () -> Unit) {

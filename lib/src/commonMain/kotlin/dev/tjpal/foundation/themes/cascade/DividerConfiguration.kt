@@ -2,8 +2,8 @@ package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
-import dev.tjpal.foundation.themes.common.DividerTheme
-import dev.tjpal.foundation.themes.common.DividerThemes
+import dev.tjpal.foundation.themes.tokens.DividerTheme
+import dev.tjpal.foundation.themes.tokens.DividerThemes
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
