@@ -34,7 +34,7 @@ fun Table(
         }
         item {
             HorizontalDivider(type = DividerType.SECONDARY)
-            Spacer(modifier = Modifier.height(Theme.current.tableTheme.contentVerticalPadding))
+            Spacer(modifier = Modifier.height(Theme.current.table.contentVerticalPadding))
         }
         items(rowCount) { rowIndex ->
             TableRow(columnDescriptions, rowIndex, cellContent)
@@ -55,15 +55,15 @@ fun Table(
         }
         item {
             HorizontalDivider(type = DividerType.SECONDARY)
-            Spacer(modifier = Modifier.height(Theme.current.tableTheme.contentVerticalPadding))
+            Spacer(modifier = Modifier.height(Theme.current.table.contentVerticalPadding))
         }
         groupDescriptions.forEachIndexed { groupIndex, group ->
             item {
-                Spacer(modifier = Modifier.height(Theme.current.tableTheme.groupVerticalPadding))
+                Spacer(modifier = Modifier.height(Theme.current.table.groupVerticalPadding))
                 Text(
                     group.name,
                     type = TextType.PRIMARY)
-                Spacer(modifier = Modifier.height(Theme.current.tableTheme.groupVerticalPadding))
+                Spacer(modifier = Modifier.height(Theme.current.table.groupVerticalPadding))
             }
             items(group.rowCount) { rowIndex ->
                 TableRow(columnDescriptions, rowIndex) @Composable { row, column ->
@@ -84,7 +84,7 @@ fun TableHeader(columnDescriptions: List<TableColum>) {
                 modifier = Modifier.
                 fillMaxWidth().
                 weight(description.weight).
-                padding(0.dp, Theme.current.tableTheme.headerVerticalPadding)
+                padding(0.dp, Theme.current.table.headerVerticalPadding)
             )
         }
     }
@@ -98,7 +98,7 @@ fun TableRow(
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         columnDescriptions.forEachIndexed { columnIndex, data ->
-            Box(modifier = Modifier.fillMaxWidth().weight(data.weight).padding(0.dp, Theme.current.tableTheme.contentVerticalPadding)) {
+            Box(modifier = Modifier.fillMaxWidth().weight(data.weight).padding(0.dp, Theme.current.table.contentVerticalPadding)) {
                 cellContent(rowIndex, columnIndex)
             }
         }

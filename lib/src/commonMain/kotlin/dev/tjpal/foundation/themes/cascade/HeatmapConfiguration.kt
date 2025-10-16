@@ -1,7 +1,7 @@
 package dev.tjpal.foundation.themes.cascade
 
-import dev.tjpal.foundation.themes.tokens.HeatmapTheme
+import dev.tjpal.foundation.themes.tokens.HeatmapTokens
 
-fun createHeatmapConfiguration(): HeatmapTheme {
-    return HeatmapTheme()
+fun createHeatmapConfiguration(): HeatmapTokens {
+    return HeatmapTokens()
 }

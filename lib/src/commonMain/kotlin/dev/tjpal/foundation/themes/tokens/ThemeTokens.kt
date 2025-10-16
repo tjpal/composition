@@ -5,14 +5,14 @@ import androidx.compose.ui.graphics.Color
 
 open class ThemeTokens(
     val background: Color = Color.White,
-    val buttons: ButtonThemes = ButtonThemes(),
+    val button: ButtonTokens = ButtonTokens(),
     val typography: Typographies = Typographies(),
-    val inputTheme: InputTheme = InputTheme(),
-    val dividerThemes: DividerThemes = DividerThemes(),
-    val tableTheme: TableTheme = TableTheme(),
-    val pagerTheme: PagerTheme = PagerTheme(),
-    val cardTheme: CardTheme = CardTheme(),
-    val heatmapTheme: HeatmapTheme = HeatmapTheme(),
+    val inputField: InputFieldTokens = InputFieldTokens(),
+    val divider: DividerTokens = DividerTokens(),
+    val table: TableTokens = TableTokens(),
+    val pager: PagerTokens = PagerTokens(),
+    val card: CardTokens = CardTokens(),
+    val heatmap: HeatmapTokens = HeatmapTokens(),
 )
 
 val Theme = compositionLocalOf { ThemeTokens() }

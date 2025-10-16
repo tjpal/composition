@@ -9,7 +9,7 @@ data class DividerTheme(
     val modifier: Modifier = Modifier
 )
 
-data class DividerThemes(
+data class DividerTokens(
     val primary: DividerTheme = DividerTheme(),
     val secondary: DividerTheme = DividerTheme()
 ) {
@@ -21,7 +21,7 @@ data class DividerThemes(
     }
 }
 
-data class PagerTheme(
+data class PagerTokens(
     val selectionBarHeight: Dp = 16.dp,
     val selectorSpacing: Dp = 0.dp,
     val contentPadding: PaddingValues = PaddingValues(0.dp),

@@ -14,14 +14,14 @@ import dev.tjpal.foundation.utilities.NoIndication
 @Composable
 fun SelectionBar(modifier: Modifier, numPages: Int, selectedPageIndex: Int, onPageSelected: (Int) -> Unit = {}) {
     Row(modifier = Modifier.
-        height(Theme.current.pagerTheme.selectionBarHeight)
+        height(Theme.current.pager.selectionBarHeight)
         then(modifier),
         horizontalArrangement = Arrangement.End) {
         for (i in 0 until numPages) {
             val typography = if (i == selectedPageIndex) {
-                Theme.current.pagerTheme.selectedPageTypography
+                Theme.current.pager.selectedPageTypography
             } else {
-                Theme.current.pagerTheme.unselectedPageTypography
+                Theme.current.pager.unselectedPageTypography
             }
 
             val interactionSource = remember { MutableInteractionSource() }
@@ -35,7 +35,7 @@ fun SelectionBar(modifier: Modifier, numPages: Int, selectedPageIndex: Int, onPa
             }
 
             if(i != numPages - 1) {
-                Spacer(modifier = Modifier.width(Theme.current.pagerTheme.selectorSpacing))
+                Spacer(modifier = Modifier.width(Theme.current.pager.selectorSpacing))
             }
         }
     }
@@ -45,7 +45,7 @@ fun SelectionBar(modifier: Modifier, numPages: Int, selectedPageIndex: Int, onPa
 fun Pager(modifier: Modifier, pages: List<@Composable () -> Unit>) {
     val selectedPage = remember { mutableStateOf(0) }
 
-    Column(modifier = Modifier.then(modifier).padding(Theme.current.pagerTheme.contentPadding)) {
+    Column(modifier = Modifier.then(modifier).padding(Theme.current.pager.contentPadding)) {
         Column(
             modifier = Modifier.
             fillMaxHeight().

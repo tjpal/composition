@@ -10,6 +10,6 @@ import dev.tjpal.foundation.themes.tokens.Theme
 fun HorizontalDivider(type: DividerType = DividerType.SECONDARY) {
     Box(modifier = Modifier.
         fillMaxWidth().
-        then(Theme.current.dividerThemes.getTheme(type).modifier)
+        then(Theme.current.divider.getTheme(type).modifier)
     )
 }
