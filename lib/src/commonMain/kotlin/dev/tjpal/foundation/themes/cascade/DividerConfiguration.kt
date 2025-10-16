@@ -3,13 +3,13 @@ package dev.tjpal.foundation.themes.cascade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
 import dev.tjpal.foundation.themes.tokens.DividerTheme
-import dev.tjpal.foundation.themes.tokens.DividerThemes
+import dev.tjpal.foundation.themes.tokens.DividerTokens
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-fun createDividerConfiguration(): DividerThemes {
-    return DividerThemes(
+fun createDividerConfiguration(): DividerTokens {
+    return DividerTokens(
         primary = DividerTheme(
             modifier = Modifier
                 .height(1.dp)

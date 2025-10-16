@@ -6,14 +6,14 @@ import dev.tjpal.foundation.themes.tokens.*
 
 class CascadeThemeData : ThemeTokens(
     background = BackgroundColor,
-    buttons = buttonConfiguration(),
+    button = buttonConfiguration(),
     typography = typographyConfiguration(),
-    inputTheme = inputConfiguration(),
-    dividerThemes = createDividerConfiguration(),
-    tableTheme = createTableConfiguration(),
-    pagerTheme = pagerConfiguration(typographyConfiguration()),
-    cardTheme = createCardConfiguration(),
-    heatmapTheme = createHeatmapConfiguration()
+    inputField = inputConfiguration(),
+    divider = createDividerConfiguration(),
+    table = createTableConfiguration(),
+    pager = pagerConfiguration(typographyConfiguration()),
+    card = createCardConfiguration(),
+    heatmap = createHeatmapConfiguration()
 )
 
 @Composable

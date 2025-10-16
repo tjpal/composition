@@ -76,7 +76,7 @@ data class HeatmapConfig(
 
 @Composable
 fun HeatmapHeader(headers: List<HeatmapHeader>, config: HeatmapConfig) {
-    val theme = Theme.current.heatmapTheme
+    val theme = Theme.current.heatmap
 
     Row(modifier = Modifier.fillMaxWidth().padding(theme.cellPadding)) {
         Spacer(modifier = Modifier.width(config.rowTextWidth))
@@ -93,7 +93,7 @@ fun HeatmapHeader(headers: List<HeatmapHeader>, config: HeatmapConfig) {
 
 @Composable
 fun HeatmapBody(rows: List<HeatmapRow>, config: HeatmapConfig) {
-    val theme = Theme.current.heatmapTheme
+    val theme = Theme.current.heatmap
 
     rows.forEach { row ->
         Row(modifier = Modifier.fillMaxWidth().padding(theme.cellPadding)) {
@@ -124,7 +124,7 @@ fun Heatmap(
     config: HeatmapConfig = HeatmapConfig(),
     modifier: Modifier = Modifier,
 ) {
-    val theme = Theme.current.heatmapTheme
+    val theme = Theme.current.heatmap
 
     Box(modifier = modifier) {
         Column(modifier = Modifier.width(config.rowTextWidth + (theme.cellSize + theme.cellPadding) * headerTexts.size  - theme.cellPadding)) {

@@ -15,7 +15,7 @@ fun CardTwoSlots(
     contentSlot: @Composable () -> Unit,
     onClick: () -> Unit = {}
 ) {
-    val theme = Theme.current.cardTheme
+    val theme = Theme.current.card
     val padding = theme.basicConfiguration.fundamentalPadding
 
     FullCardFrame(modifier = modifier.

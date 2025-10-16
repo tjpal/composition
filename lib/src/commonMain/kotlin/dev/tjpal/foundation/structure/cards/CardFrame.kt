@@ -19,7 +19,7 @@ fun VerticalHalfFrame(modifier: Modifier = Modifier, content: @Composable () -> 
 
 @Composable
 fun CardFrame(modifier: Modifier = Modifier, scaleWidth: Float, scaleHeight: Float, content: @Composable () -> Unit) {
-    val theme = Theme.current.cardTheme
+    val theme = Theme.current.card
     Box(
         modifier = Modifier.
             width(theme.basicConfiguration.cardTileSize * scaleWidth).

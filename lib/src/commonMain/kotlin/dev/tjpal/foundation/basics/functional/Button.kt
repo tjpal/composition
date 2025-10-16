@@ -20,7 +20,7 @@ fun Button(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val buttonTheme = Theme.current.buttons.getButtonTheme(type)
+    val buttonTheme = Theme.current.button.getButtonTheme(type)
     val buttonModifier = if(isPressed) buttonTheme.pressed.modifier else buttonTheme.default.modifier
 
     Box(modifier = modifier.

@@ -2,12 +2,12 @@ package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
-import dev.tjpal.foundation.themes.tokens.InputTheme
+import dev.tjpal.foundation.themes.tokens.InputFieldTokens
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-fun inputConfiguration(): InputTheme {
-    return InputTheme(
+fun inputConfiguration(): InputFieldTokens {
+    return InputFieldTokens(
         modifier = Modifier.
         background(BackgroundColor, shape = RoundedCornerShape(12.dp)).
         insetShapeShadow(

@@ -14,7 +14,7 @@ data class CardHeaderConfiguration(
     val headerHeight: Dp = 16.dp
 )
 
-data class CardTheme(
+data class CardTokens(
     val basicConfiguration: CardBasicConfiguration = CardBasicConfiguration(),
     val headerConfiguration: CardHeaderConfiguration = CardHeaderConfiguration()
 )

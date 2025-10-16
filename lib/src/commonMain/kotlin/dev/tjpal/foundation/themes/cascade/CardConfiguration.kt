@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.themes.tokens.CardBasicConfiguration
 import dev.tjpal.foundation.themes.tokens.CardHeaderConfiguration
-import dev.tjpal.foundation.themes.tokens.CardTheme
+import dev.tjpal.foundation.themes.tokens.CardTokens
 
 private val CardCornerRadius = 6f.dp
 
-fun createCardConfiguration(): CardTheme {
-    return CardTheme(
+fun createCardConfiguration(): CardTokens {
+    return CardTokens(
         basicConfiguration = CardBasicConfiguration(
             modifier = Modifier.
             shapeShadow(
