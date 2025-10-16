@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.functional.Button
 import dev.tjpal.foundation.basics.functional.Input
@@ -21,9 +20,9 @@ import dev.tjpal.foundation.structure.TableColum
 import dev.tjpal.foundation.structure.TableGroup
 import dev.tjpal.foundation.structure.cards.CardTwoSlots
 import dev.tjpal.foundation.themes.cascade.*
-import dev.tjpal.foundation.themes.common.ButtonType
-import dev.tjpal.foundation.themes.common.TextType
-import dev.tjpal.foundation.themes.common.Theme
+import dev.tjpal.foundation.themes.tokens.ButtonType
+import dev.tjpal.foundation.themes.tokens.TextType
+import dev.tjpal.foundation.themes.tokens.Theme
 
 @Composable
 fun GalleryScreen(content: @Composable () -> Unit) {

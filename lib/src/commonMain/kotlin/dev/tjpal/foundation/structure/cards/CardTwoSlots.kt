@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.onClick
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.tjpal.foundation.themes.common.Theme
+import dev.tjpal.foundation.themes.tokens.Theme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

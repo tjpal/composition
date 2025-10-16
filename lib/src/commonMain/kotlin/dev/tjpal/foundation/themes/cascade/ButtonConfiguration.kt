@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.tjpal.foundation.themes.common.ButtonStateTheme
-import dev.tjpal.foundation.themes.common.ButtonTheme
-import dev.tjpal.foundation.themes.common.ButtonThemes
+import dev.tjpal.foundation.themes.tokens.ButtonStateTheme
+import dev.tjpal.foundation.themes.tokens.ButtonTheme
+import dev.tjpal.foundation.themes.tokens.ButtonThemes
 
 private val ButtonCornerRadius = 6f.dp
 private val ButtonPadding = PaddingValues(24.dp, 10.dp, 24.dp, 10.dp)

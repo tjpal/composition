@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.spacing.HorizontalDivider
 import dev.tjpal.foundation.basics.text.Text
-import dev.tjpal.foundation.themes.common.DividerType
-import dev.tjpal.foundation.themes.common.TextType
-import dev.tjpal.foundation.themes.common.Theme
+import dev.tjpal.foundation.themes.tokens.DividerType
+import dev.tjpal.foundation.themes.tokens.TextType
+import dev.tjpal.foundation.themes.tokens.Theme
 
 data class TableColum(
     val name: String,

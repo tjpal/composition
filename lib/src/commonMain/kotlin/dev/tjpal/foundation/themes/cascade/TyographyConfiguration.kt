@@ -6,8 +6,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.sp
-import dev.tjpal.foundation.themes.common.Typographies
-import dev.tjpal.foundation.themes.common.Typography
+import dev.tjpal.foundation.themes.tokens.Typographies
+import dev.tjpal.foundation.themes.tokens.Typography
 
 fun typographyConfiguration(): Typographies {
     return Typographies(

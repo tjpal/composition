@@ -22,9 +22,9 @@ import dev.tjpal.foundation.structure.TableColum
 import dev.tjpal.foundation.structure.TableGroup
 import dev.tjpal.foundation.structure.cards.CardTwoSlots
 import dev.tjpal.foundation.themes.cascade.BackgroundColor
-import dev.tjpal.foundation.themes.common.ButtonType
-import dev.tjpal.foundation.themes.common.DividerType
-import dev.tjpal.foundation.themes.common.TextType
+import dev.tjpal.foundation.themes.tokens.ButtonType
+import dev.tjpal.foundation.themes.tokens.DividerType
+import dev.tjpal.foundation.themes.tokens.TextType
 
 @Preview
 @Composable
