@@ -13,6 +13,7 @@ open class ThemeTokens(
     val pager: PagerTokens = PagerTokens(),
     val card: CardTokens = CardTokens(),
     val heatmap: HeatmapTokens = HeatmapTokens(),
+    val grid: GridTokens = GridTokens(),
 )
 
 val Theme = compositionLocalOf { ThemeTokens() }
