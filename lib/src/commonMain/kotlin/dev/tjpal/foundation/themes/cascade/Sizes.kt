@@ -9,3 +9,5 @@ const val OutsetShadowBlurRadius = 3f
 const val InsetShadowBlurRadius = 1f
 val InsetShadowPressedOffsetX = 2.dp
 val InsetShadowPressedOffsetY= 2.dp
+
+val DefaultCornerRadius = 6f.dp
