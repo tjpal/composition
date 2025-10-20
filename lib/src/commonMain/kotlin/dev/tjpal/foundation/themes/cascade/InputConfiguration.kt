@@ -10,12 +10,6 @@ fun inputConfiguration(): InputFieldTokens {
     return InputFieldTokens(
         modifier = Modifier.
         background(BackgroundColor, shape = RoundedCornerShape(12.dp)).
-        insetShapeShadow(
-                HighlightShadowColor,
-                CastShadowColor,
-                1.0f,
-                2.0f, 2.dp, 2.dp,
-                RoundedCornerShape(12.dp)
-            )
+        defaultInnerInsetShapeShadow(12.dp)
     )
 }
