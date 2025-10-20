@@ -20,6 +20,7 @@ fun ZoomableBox(
     modifier: Modifier = Modifier,
     state: ZoomableState = rememberZoomableState(),
     initialScaleMode: InitialScaleMode = InitialScaleMode.DEFAULT,
+    constraintMeasurementScale: Int = 10,
     content: @Composable () -> Unit
 ) {
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
@@ -44,9 +45,9 @@ fun ZoomableBox(
         val measurables = subcompose("content-measure", content)
         val looseConstraints = Constraints(
             0,
-            containerWidth * 10,
+            containerWidth * constraintMeasurementScale,
             0,
-            containerHeight * 10
+            containerHeight * constraintMeasurementScale
         )
 
         val contentItemSizes = measurables.map { it.measure(looseConstraints) }
