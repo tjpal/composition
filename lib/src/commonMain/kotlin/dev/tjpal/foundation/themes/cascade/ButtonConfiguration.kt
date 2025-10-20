@@ -10,7 +10,6 @@ import dev.tjpal.foundation.themes.tokens.ButtonStateTokens
 import dev.tjpal.foundation.themes.tokens.ButtonCategoryTokens
 import dev.tjpal.foundation.themes.tokens.ButtonTokens
 
-private val ButtonCornerRadius = 6f.dp
 private val ButtonPadding = PaddingValues(24.dp, 10.dp, 24.dp, 10.dp)
 
 fun buttonConfiguration(): ButtonTokens {
@@ -25,11 +24,11 @@ fun buttonConfiguration(): ButtonTokens {
                     blurRadius = OutsetShadowBlurRadius,
                     offsetX = OutsetShadowOffsetX,
                     offsetY = OutsetShadowOffsetY,
-                    shape = RoundedCornerShape(ButtonCornerRadius)
+                    shape = RoundedCornerShape(DefaultCornerRadius)
                 ).
                 background(
                     BackgroundColor,
-                    RoundedCornerShape(ButtonCornerRadius)
+                    RoundedCornerShape(DefaultCornerRadius)
                 ).
                 padding(ButtonPadding)
             ),
@@ -41,11 +40,11 @@ fun buttonConfiguration(): ButtonTokens {
                     InsetShadowBlurRadius,
                     InsetShadowPressedOffsetX,
                     InsetShadowPressedOffsetY,
-                    RoundedCornerShape(ButtonCornerRadius)
+                    RoundedCornerShape(DefaultCornerRadius)
                 ).
                 background(
                     BackgroundColor,
-                    RoundedCornerShape(ButtonCornerRadius)
+                    RoundedCornerShape(DefaultCornerRadius)
                 ).
                 padding(ButtonPadding)
             )
