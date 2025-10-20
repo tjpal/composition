@@ -14,6 +14,7 @@ open class ThemeTokens(
     val card: CardTokens = CardTokens(),
     val heatmap: HeatmapTokens = HeatmapTokens(),
     val grid: GridTokens = GridTokens(),
+    val graph: GraphTokens = GraphTokens(),
 )
 
 val Theme = compositionLocalOf { ThemeTokens() }
