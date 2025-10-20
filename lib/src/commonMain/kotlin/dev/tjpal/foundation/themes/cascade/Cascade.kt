@@ -13,7 +13,8 @@ class CascadeThemeData : ThemeTokens(
     table = createTableConfiguration(),
     pager = pagerConfiguration(typographyConfiguration()),
     card = createCardConfiguration(),
-    heatmap = createHeatmapConfiguration()
+    heatmap = createHeatmapConfiguration(),
+    graph = createGraphConfiguration()
 )
 
 @Composable
