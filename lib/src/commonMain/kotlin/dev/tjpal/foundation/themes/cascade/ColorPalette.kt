@@ -2,7 +2,7 @@ package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.ui.graphics.Color
 
-val BackgroundColor = Color(238, 238, 245, 255)
+val BackgroundColor = Color(239, 239, 239, 255)
 val BlueBackgroundColor = Color(229, 239, 251, 255)
 
 val HighlightShadowColor = Color(255, 255, 255, 255)
