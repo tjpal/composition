@@ -1,11 +1,15 @@
 package dev.tjpal.foundation.themes.cascade
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import org.jetbrains.skia.FilterBlurMode
 import org.jetbrains.skia.MaskFilter
 
@@ -49,6 +53,37 @@ fun Modifier.insetShapeShadow(
         }
     }
 
+)
+
+fun Modifier.defaultInnerInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.insetShapeShadow(
+    HighlightShadowColor,
+    CastShadowColor,
+    blurRadius = 1.0f,
+    strokeSize = 2.0f,
+    offsetX = 2.dp,
+    offsetY = 2.dp,
+    shape =RoundedCornerShape(12.dp)
+)
+
+fun Modifier.defaultCascadeBackground(cornerRadius: Dp = DefaultCornerRadius) =
+    this.background(BackgroundColor,RoundedCornerShape(cornerRadius))
+
+fun Modifier.defaultCascadeShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.shapeShadow(
+    highlightShadowColor = HighlightShadowColor,
+    castShadowColor = CastShadowColor,
+    blurRadius = OutsetShadowBlurRadius,
+    offsetX = OutsetShadowOffsetX,
+    offsetY = OutsetShadowOffsetY,
+    shape = RoundedCornerShape(cornerRadius)
+)
+
+fun Modifier.defaultInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.shapeShadow(
+    CastShadowColor,
+    HighlightShadowColor,
+    InsetShadowBlurRadius,
+    InsetShadowPressedOffsetX,
+    InsetShadowPressedOffsetY,
+    RoundedCornerShape(cornerRadius)
 )
 
 fun Modifier.shapeShadow(
