@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -146,6 +147,9 @@ fun GraphEditor(
                     height = height,
                     position = pos,
                     nodeModifier = theme.graph.node.modifier,
+                    nodeSpec = spec,
+                    gridSpacing = gridSpacing,
+                    edges = edges,
                     onDragDelta = { delta ->
                         val current = state.nodePositions[spec.id] ?: Offset.Zero
                         state.nodePositions[spec.id] = current + delta
@@ -164,6 +168,15 @@ private fun directionForSide(side: EdgeSide): Offset {
         EdgeSide.BOTTOM -> Offset(0f, 1f)
         EdgeSide.LEFT -> Offset(-1f, 0f)
         EdgeSide.RIGHT -> Offset(1f, 0f)
+    }
+}
+
+private fun orthogonalOffsetForSide(side: EdgeSide, amount: Float): Offset {
+    return when (side) {
+        EdgeSide.TOP -> Offset(-amount, 0f)
+        EdgeSide.RIGHT -> Offset(0f, -amount)
+        EdgeSide.BOTTOM -> Offset(amount, 0f)
+        EdgeSide.LEFT -> Offset(0f, -amount)
     }
 }
 
@@ -202,9 +215,14 @@ private fun Node(
     height: Dp,
     position: Offset,
     nodeModifier: Modifier = Modifier,
+    nodeSpec: NodeSpec,
+    gridSpacing: Dp,
+    edges: List<EdgeSpec>,
     onDragDelta: (Offset) -> Unit,
     content: @Composable () -> Unit,
 ) {
+    val theme = Theme.current
+
     Box(
         modifier = Modifier.
             graphicsLayer { translationX = position.x; translationY = position.y }.
@@ -218,5 +236,41 @@ private fun Node(
             }
     ) {
         content()
+
+        // Draw connector dots on top of the node content so they are visible regardless of node content
+        val density = LocalDensity.current
+        Canvas(modifier = Modifier.matchParentSize()) {
+            val gridSpacingPx = with(density) { gridSpacing.toPx() }
+            val nodeWidthPx = size.width
+            val nodeHeightPx = size.height
+
+            val connectorInsetPx = with(density) { theme.graph.connector.inset.toPx() }
+
+            val halfGridPx = gridSpacingPx * 0.25f
+
+            nodeSpec.connectors.forEach { connector ->
+                val basePos = connector.position(nodeSpec, nodeWidthPx, nodeHeightPx, gridSpacingPx)
+                val dir = directionForSide(connector.side)
+
+                val isConnected = edges.any { edge ->
+                    (edge.fromNodeId == nodeSpec.id && edge.fromConnectorId == connector.id) ||
+                        (edge.toNodeId == nodeSpec.id && edge.toConnectorId == connector.id)
+                }
+
+                val dotTokens = if (isConnected) theme.graph.connector.connectedDot else theme.graph.connector.notConnectedDot
+
+                val inwardInset = Offset(-dir.x * connectorInsetPx, -dir.y * connectorInsetPx)
+                val orthogonal = orthogonalOffsetForSide(connector.side, halfGridPx)
+
+                val finalPos = basePos + inwardInset + orthogonal
+
+                drawCircle(
+                    color = dotTokens.color,
+                    radius = dotTokens.radius.toPx(),
+                    center = finalPos,
+                    style = if(dotTokens.filled) Fill else Stroke(width = dotTokens.strokeWidth.toPx())
+                )
+            }
+        }
     }
 }
