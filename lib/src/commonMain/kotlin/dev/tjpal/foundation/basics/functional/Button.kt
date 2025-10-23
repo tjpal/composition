@@ -6,11 +6,17 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
 import dev.tjpal.foundation.themes.tokens.ButtonType
 import dev.tjpal.foundation.themes.tokens.Theme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
@@ -20,12 +26,33 @@ fun Button(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val buttonTheme = Theme.current.button.getButtonTheme(type)
-    val buttonModifier = if(isPressed) buttonTheme.pressed.modifier else buttonTheme.default.modifier
+    var isHovered by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier.
-        clickable(interactionSource = interactionSource, indication = null, onClick = onClick).
-        then(buttonModifier)
+    val buttonTheme = Theme.current.button.getButtonTheme(type)
+
+    // Shy buttons do not render any border until hovered. They are used to reduce visual noise when other
+    // separating visual elements are sufficient.
+    val buttonModifier = when (type) {
+        ButtonType.SHY -> {
+            when {
+                isPressed -> buttonTheme.pressed.modifier
+                isHovered -> buttonTheme.default.modifier
+                else -> buttonTheme.flat.modifier
+            }
+        }
+        else -> if (isPressed) buttonTheme.pressed.modifier else buttonTheme.default.modifier
+    }
+
+    Box(
+        modifier = modifier.
+            onPointerEvent(PointerEventType.Enter) {
+                isHovered = true
+            }.
+            onPointerEvent(PointerEventType.Exit) {
+                isHovered = false
+            }.
+            clickable(interactionSource = interactionSource, indication = null, onClick = onClick).
+            then(buttonModifier)
     ) {
         content()
     }
