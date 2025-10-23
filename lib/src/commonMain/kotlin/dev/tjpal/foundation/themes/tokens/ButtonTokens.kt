@@ -4,7 +4,8 @@ import androidx.compose.ui.Modifier
 
 enum class ButtonType {
     PRIMARY,
-    DEFAULT
+    DEFAULT,
+    SHY
 }
 
 enum class TextType {
@@ -22,12 +23,14 @@ data class ButtonStateTokens(
 )
 
 data class ButtonCategoryTokens(
+    val flat: ButtonStateTokens = ButtonStateTokens(),
     val default: ButtonStateTokens = ButtonStateTokens(),
     val pressed: ButtonStateTokens = ButtonStateTokens(),
 )
 
 data class ButtonTokens(
     val primaryButton: ButtonCategoryTokens = ButtonCategoryTokens(),
+    val shyButton: ButtonCategoryTokens = ButtonCategoryTokens(),
     val primaryText: Typography = Typography(),
     val defaultText: Typography = Typography()
 ) {
@@ -35,6 +38,7 @@ data class ButtonTokens(
         return when (type) {
             ButtonType.PRIMARY -> primaryButton
             ButtonType.DEFAULT -> primaryButton
+            ButtonType.SHY -> shyButton
         }
     }
 }
