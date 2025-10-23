@@ -9,6 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.functional.Button
 import dev.tjpal.foundation.basics.functional.Input
@@ -19,10 +21,17 @@ import dev.tjpal.foundation.structure.Table
 import dev.tjpal.foundation.structure.TableColum
 import dev.tjpal.foundation.structure.TableGroup
 import dev.tjpal.foundation.structure.cards.CardTwoSlots
+import dev.tjpal.foundation.structure.graphs.Connector
+import dev.tjpal.foundation.structure.graphs.EdgeSide
+import dev.tjpal.foundation.structure.graphs.EdgeSpec
+import dev.tjpal.foundation.structure.graphs.GraphEditor
+import dev.tjpal.foundation.structure.graphs.GraphState
+import dev.tjpal.foundation.structure.graphs.NodeSpec
 import dev.tjpal.foundation.themes.cascade.*
 import dev.tjpal.foundation.themes.tokens.ButtonType
 import dev.tjpal.foundation.themes.tokens.TextType
 import dev.tjpal.foundation.themes.tokens.Theme
+import dev.tjpal.foundation.utilities.zoom.InitialScaleMode
 
 @Composable
 fun GalleryScreen(content: @Composable () -> Unit) {
@@ -30,6 +39,60 @@ fun GalleryScreen(content: @Composable () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         content()
+    }
+}
+
+
+@Composable
+fun NodeBubble(id: String) {
+    Text(id)
+}
+
+@Composable
+fun DemoScreen() {
+    val gridSpacing = 24.dp
+
+    val nodes = remember {
+        listOf(
+            NodeSpec(
+                id = "A",
+                initialPosition = Offset(80f, 160f),
+                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1))
+            ) { id -> NodeBubble(id) },
+            NodeSpec(
+                id = "B",
+                initialPosition = Offset(160f, 160f),
+                connectors = listOf(Connector("B1", EdgeSide.TOP, 1))
+            ) { id -> NodeBubble(id) },
+            NodeSpec(
+                id = "C",
+                initialPosition = Offset(280f, 120f),
+                connectors = listOf(Connector("C1", EdgeSide.LEFT, 0), Connector("C2", EdgeSide.TOP, 1))
+            ) { id -> NodeBubble(id)},
+        )
+    }
+
+    val edges = remember {
+        listOf(
+            EdgeSpec(fromNodeId = "A", toNodeId = "B", fromConnectorId = "A1", toConnectorId = "B1"),
+            EdgeSpec(fromNodeId = "B", toNodeId = "C", fromConnectorId = "B1", toConnectorId = "C1"),
+            EdgeSpec(fromNodeId = "A", toNodeId = "C", fromConnectorId = "A1", toConnectorId = "C2"),
+        )
+    }
+
+    val graphState = remember { GraphState(nodes) }
+
+    Box(
+        modifier = Modifier.size(600.dp)
+    ) {
+        GraphEditor(
+            state = graphState,
+            nodes = nodes,
+            edges = edges,
+            gridSpacing = gridSpacing,
+            gridExtension = 2000f,
+            initialScaleMode = InitialScaleMode.DEFAULT
+        )
     }
 }
 
@@ -43,6 +106,8 @@ fun Gallery() {
                 Button(type = ButtonType.PRIMARY) {
                     Text("Primary Button", type = TextType.PRIMARY)
                 }
+
+                DemoScreen()
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(type = ButtonType.DEFAULT) {
