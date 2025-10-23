@@ -19,7 +19,8 @@ data class GraphConnectorDotTokens(
     val color: Color = Color(0xFF6C6C6C),
     val radius: Dp = 7.dp,
     val filled: Boolean = true,
-    val strokeWidth: Dp = 1.dp
+    val strokeWidth: Dp = 1.dp,
+    val hitRadius: Dp = 12.dp // clickable/hit area radius for connectors (slightly larger than visual radius)
 )
 
 /**
