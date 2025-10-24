@@ -29,6 +29,12 @@ kotlin {
             }
         }
         binaries.executable()
+        binaries.library()
+    }
+
+    js(IR) {
+        browser()
+        binaries.library()
     }
 
     jvm("desktop")
