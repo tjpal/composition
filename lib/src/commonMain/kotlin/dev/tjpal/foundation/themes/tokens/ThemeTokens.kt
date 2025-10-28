@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 open class ThemeTokens(
     val background: Color = Color.White,
     val button: ButtonTokens = ButtonTokens(),
+    val floatingBar: FloatingBarTokens = FloatingBarTokens(),
     val typography: Typographies = Typographies(),
     val inputField: InputFieldTokens = InputFieldTokens(),
     val divider: DividerTokens = DividerTokens(),
