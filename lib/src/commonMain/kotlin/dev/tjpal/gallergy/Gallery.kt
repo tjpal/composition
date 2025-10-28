@@ -5,14 +5,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.functional.Button
+import dev.tjpal.foundation.basics.functional.FloatingBar
 import dev.tjpal.foundation.basics.functional.Input
 import dev.tjpal.foundation.basics.text.Link
 import dev.tjpal.foundation.basics.text.Text
@@ -27,11 +28,15 @@ import dev.tjpal.foundation.structure.graphs.EdgeSpec
 import dev.tjpal.foundation.structure.graphs.GraphEditor
 import dev.tjpal.foundation.structure.graphs.GraphState
 import dev.tjpal.foundation.structure.graphs.NodeSpec
+import dev.tjpal.foundation.templates.FloatingBarTemplate
 import dev.tjpal.foundation.themes.cascade.*
 import dev.tjpal.foundation.themes.tokens.ButtonType
+import dev.tjpal.foundation.themes.tokens.FloatingBarLocation
+import dev.tjpal.foundation.themes.tokens.FloatingBarOrientation
 import dev.tjpal.foundation.themes.tokens.TextType
 import dev.tjpal.foundation.themes.tokens.Theme
 import dev.tjpal.foundation.utilities.zoom.InitialScaleMode
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun GalleryScreen(content: @Composable () -> Unit) {
@@ -42,14 +47,8 @@ fun GalleryScreen(content: @Composable () -> Unit) {
     }
 }
 
-
 @Composable
-fun NodeBubble(id: String) {
-    Text(id)
-}
-
-@Composable
-fun DemoScreen() {
+fun GraphEditorDemoScreen() {
     val gridSpacing = 24.dp
 
     val nodes = remember {
@@ -57,41 +56,69 @@ fun DemoScreen() {
             NodeSpec(
                 id = "A",
                 initialPosition = Offset(80f, 160f),
-                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1))
-            ) { id -> NodeBubble(id) },
+                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1), Connector("A2", EdgeSide.RIGHT, 0))
+            ) { id -> Text(id) },
             NodeSpec(
                 id = "B",
                 initialPosition = Offset(160f, 160f),
-                connectors = listOf(Connector("B1", EdgeSide.TOP, 1))
-            ) { id -> NodeBubble(id) },
+                connectors = listOf(Connector("B1", EdgeSide.TOP, 1), Connector("B2", EdgeSide.TOP, 2))
+            ) { id -> Text(id) },
             NodeSpec(
                 id = "C",
                 initialPosition = Offset(280f, 120f),
                 connectors = listOf(Connector("C1", EdgeSide.LEFT, 0), Connector("C2", EdgeSide.TOP, 1))
-            ) { id -> NodeBubble(id)},
+            ) { id -> Text(id) },
         )
     }
 
     val edges = remember {
-        listOf(
-            EdgeSpec(fromNodeId = "A", toNodeId = "B", fromConnectorId = "A1", toConnectorId = "B1"),
-            EdgeSpec(fromNodeId = "B", toNodeId = "C", fromConnectorId = "B1", toConnectorId = "C1"),
-            EdgeSpec(fromNodeId = "A", toNodeId = "C", fromConnectorId = "A1", toConnectorId = "C2"),
+        MutableStateFlow(
+            mutableListOf(
+                EdgeSpec(fromNodeId = "A", toNodeId = "B", fromConnectorId = "A1", toConnectorId = "B1"),
+                EdgeSpec(fromNodeId = "B", toNodeId = "C", fromConnectorId = "B1", toConnectorId = "C1"),
+                EdgeSpec(fromNodeId = "A", toNodeId = "C", fromConnectorId = "A1", toConnectorId = "C2"),
+            )
         )
     }
 
     val graphState = remember { GraphState(nodes) }
 
     Box(
-        modifier = Modifier.size(600.dp)
+        modifier = Modifier.width(1024.dp).height(768.dp)
     ) {
+        val onConnected = { fromNodeId: String, fromConnectorId: String, toNodeId: String, toConnectorId: String ->
+            val newEdgeList = edges.value + mutableListOf(EdgeSpec(
+                fromNodeId = fromNodeId,
+                toNodeId = toNodeId,
+                fromConnectorId = fromConnectorId,
+                toConnectorId = toConnectorId)
+            )
+            edges.value = newEdgeList.toMutableList()
+
+            println("Connected $fromNodeId:$fromConnectorId to $toNodeId:$toConnectorId")
+        }
+
+        val onDisconnected = { nodeId: String, connectorId: String ->
+            val newEdgeList = edges.value.filter {
+                !((it.fromNodeId == nodeId && it.fromConnectorId == connectorId) ||
+                  (it.toNodeId == nodeId && it.toConnectorId == connectorId))
+            }
+            edges.value = newEdgeList.toMutableList()
+
+            println("Disconnected $nodeId:$connectorId")
+        }
+
+        val dynEdgeList = edges.collectAsState()
+
         GraphEditor(
             state = graphState,
             nodes = nodes,
-            edges = edges,
+            edges = dynEdgeList.value,
             gridSpacing = gridSpacing,
             gridExtension = 2000f,
-            initialScaleMode = InitialScaleMode.DEFAULT
+            initialScaleMode = InitialScaleMode.DEFAULT,
+            onConnect = onConnected,
+            onDisconnect = onDisconnected
         )
     }
 }
@@ -107,12 +134,57 @@ fun Gallery() {
                     Text("Primary Button", type = TextType.PRIMARY)
                 }
 
-                DemoScreen()
+
+                val buttonList = listOf(
+                    listOf(
+                        @Composable {
+                            Button(type = ButtonType.SHY) {
+                                Text("A")
+                            }
+                        },
+                        @Composable {
+                            Button(type = ButtonType.SHY) {
+                                Text("B")
+                            }
+                        }
+                    ),
+                    listOf(
+                        @Composable {
+                            Button(type = ButtonType.SHY) {
+                                Text("C")
+                            }
+                        }
+                    )
+                )
+
+                FloatingBarTemplate(
+                    modifier = Modifier.width(1024.dp).height(768.dp),
+                    location = FloatingBarLocation.BOTTOM,
+                    barInset = 8.dp,
+                    bandThickness = 64.dp,
+                    floatingBar = {
+                        FloatingBar(
+                            buttonExtent = 64.dp,
+                            groups = buttonList,
+                            orientation = FloatingBarOrientation.HORIZONTAL,
+                        )
+                    },
+                    content = {
+                        GraphEditorDemoScreen()
+                    }
+                )
+
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(type = ButtonType.DEFAULT) {
                     Text("Default Button", type = TextType.DEFAULT)
                 }
+                Spacer(modifier = Modifier.height(32.dp))
+                Button(type = ButtonType.SHY) {
+                    Text("Shy Button", type = TextType.DEFAULT)
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Input(modifier = Modifier.height(32.dp).width(200.dp))
