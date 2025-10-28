@@ -7,6 +7,7 @@ import dev.tjpal.foundation.themes.tokens.*
 class CascadeThemeData : ThemeTokens(
     background = BackgroundColor,
     button = buttonConfiguration(),
+    floatingBar = createFloatingBarConfiguration(),
     typography = typographyConfiguration(),
     inputField = inputConfiguration(),
     divider = createDividerConfiguration(),
