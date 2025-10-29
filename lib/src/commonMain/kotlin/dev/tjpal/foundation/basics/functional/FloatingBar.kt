@@ -15,15 +15,53 @@ import dev.tjpal.foundation.themes.tokens.DividerType
 import dev.tjpal.foundation.themes.tokens.FloatingBarOrientation
 import dev.tjpal.foundation.themes.tokens.Theme
 
+/**
+ * DSL and builder for constructing groups/items for FloatingBar in a declarative way.
+ *
+ * Usage:
+ * FloatingBar(buttonExtent = 64.dp) {
+ *   group {
+ *     item { /* composable */ }
+ *     item { /* composable */ }
+ *   }
+ *   group { ... }
+ * }
+ */
+@DslMarker
+annotation class FloatingBarDsl
+
+@FloatingBarDsl
+class FloatingBarBuilder {
+    internal val groups = mutableListOf<GroupBuilder>()
+
+    fun group(block: GroupBuilder.() -> Unit) {
+        val gb = GroupBuilder().apply(block)
+        groups += gb
+    }
+}
+
+@FloatingBarDsl
+class GroupBuilder {
+    internal val items = mutableListOf<@Composable () -> Unit>()
+
+    fun item(content: @Composable () -> Unit) {
+        items += content
+    }
+}
 
 @Composable
 fun FloatingBar(
     modifier: Modifier = Modifier,
     buttonExtent: Dp,
-    groups: List<List<@Composable () -> Unit>>,
-    orientation: FloatingBarOrientation = FloatingBarOrientation.HORIZONTAL
+    orientation: FloatingBarOrientation = FloatingBarOrientation.HORIZONTAL,
+    content: FloatingBarBuilder.() -> Unit
 ) {
-    if (groups.isEmpty()) return
+    val builder = FloatingBarBuilder().apply(content)
+    val groups = builder.groups.map { it.items.toList() }
+
+    if(groups.isEmpty()) {
+        return
+    }
 
     val tokens = Theme.current.floatingBar
     val totalButtons = groups.sumOf { it.size }
