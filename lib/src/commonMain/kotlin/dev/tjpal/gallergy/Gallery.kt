@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.functional.Button
 import dev.tjpal.foundation.basics.functional.FloatingBar
 import dev.tjpal.foundation.basics.functional.Input
+import dev.tjpal.foundation.basics.functional.WaitingCircle
 import dev.tjpal.foundation.basics.text.Link
 import dev.tjpal.foundation.basics.text.Text
 import dev.tjpal.foundation.structure.Pager
@@ -133,6 +134,8 @@ fun Gallery() {
                 Button(type = ButtonType.PRIMARY) {
                     Text("Primary Button", type = TextType.PRIMARY)
                 }
+
+                WaitingCircle()
 
                 FloatingBarTemplate(
                     modifier = Modifier.width(1024.dp).height(768.dp),
