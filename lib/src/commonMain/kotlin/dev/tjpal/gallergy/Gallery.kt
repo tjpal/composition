@@ -134,29 +134,6 @@ fun Gallery() {
                     Text("Primary Button", type = TextType.PRIMARY)
                 }
 
-
-                val buttonList = listOf(
-                    listOf(
-                        @Composable {
-                            Button(type = ButtonType.SHY) {
-                                Text("A")
-                            }
-                        },
-                        @Composable {
-                            Button(type = ButtonType.SHY) {
-                                Text("B")
-                            }
-                        }
-                    ),
-                    listOf(
-                        @Composable {
-                            Button(type = ButtonType.SHY) {
-                                Text("C")
-                            }
-                        }
-                    )
-                )
-
                 FloatingBarTemplate(
                     modifier = Modifier.width(1024.dp).height(768.dp),
                     location = FloatingBarLocation.BOTTOM,
@@ -165,9 +142,28 @@ fun Gallery() {
                     floatingBar = {
                         FloatingBar(
                             buttonExtent = 64.dp,
-                            groups = buttonList,
-                            orientation = FloatingBarOrientation.HORIZONTAL,
-                        )
+                            orientation = FloatingBarOrientation.HORIZONTAL
+                        ) {
+                            group {
+                                item {
+                                    Button(type = ButtonType.SHY) {
+                                        Text("A")
+                                    }
+                                }
+                                item {
+                                    Button(type = ButtonType.SHY) {
+                                        Text("B")
+                                    }
+                                }
+                            }
+                            group {
+                                item {
+                                    Button(type = ButtonType.SHY) {
+                                        Text("C")
+                                    }
+                                }
+                            }
+                        }
                     },
                     content = {
                         GraphEditorDemoScreen()
@@ -244,4 +240,3 @@ fun Gallery() {
         }
     }
 }
-
