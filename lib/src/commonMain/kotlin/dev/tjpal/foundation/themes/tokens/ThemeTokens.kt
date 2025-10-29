@@ -16,6 +16,8 @@ open class ThemeTokens(
     val heatmap: HeatmapTokens = HeatmapTokens(),
     val grid: GridTokens = GridTokens(),
     val graph: GraphTokens = GraphTokens(),
+    // new waiting animation tokens
+    val waiting: WaitingTokens = WaitingTokens()
 )
 
 val Theme = compositionLocalOf { ThemeTokens() }
