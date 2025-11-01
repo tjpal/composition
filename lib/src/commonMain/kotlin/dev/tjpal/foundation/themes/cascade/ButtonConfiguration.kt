@@ -2,6 +2,7 @@ package dev.tjpal.foundation.themes.cascade
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.themes.tokens.ButtonStateTokens
@@ -20,7 +21,7 @@ fun buttonConfiguration(): ButtonTokens {
                 modifier = Modifier.defaultInsetShapeShadow().defaultCascadeBackground().padding(ButtonPadding)
             )
         ),
-        // A shy button use flat design with no shadow until the cursor is moved over it. The goal is to reduce visual noise.
+        // A shy button uses flat design with no shadow until the cursor is moved over it. The goal is to reduce visual noise.
         shyButton = ButtonCategoryTokens(
             flat = ButtonStateTokens(
                 modifier = Modifier.defaultCascadeBackground().padding(ButtonPadding)
@@ -30,6 +31,18 @@ fun buttonConfiguration(): ButtonTokens {
             ),
             pressed = ButtonStateTokens(
                 modifier = Modifier.defaultInsetShapeShadow().defaultCascadeBackground().padding(ButtonPadding)
+            )
+        ),
+        // Icon buttons are visually compact and provide a small visual size.
+        iconButton = ButtonCategoryTokens(
+            flat = ButtonStateTokens(
+                modifier = Modifier.defaultCascadeBackground().size(40.dp)
+            ),
+            default = ButtonStateTokens(
+                modifier = Modifier.defaultCascadeShapeShadow().defaultCascadeBackground().size(40.dp)
+            ),
+            pressed = ButtonStateTokens(
+                modifier = Modifier.defaultInsetShapeShadow().defaultCascadeBackground().size(40.dp)
             )
         )
     )
