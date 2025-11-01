@@ -31,6 +31,7 @@ data class ButtonCategoryTokens(
 data class ButtonTokens(
     val primaryButton: ButtonCategoryTokens = ButtonCategoryTokens(),
     val shyButton: ButtonCategoryTokens = ButtonCategoryTokens(),
+    val iconButton: ButtonCategoryTokens = ButtonCategoryTokens(),
     val primaryText: Typography = Typography(),
     val defaultText: Typography = Typography()
 ) {
@@ -39,6 +40,13 @@ data class ButtonTokens(
             ButtonType.PRIMARY -> primaryButton
             ButtonType.DEFAULT -> primaryButton
             ButtonType.SHY -> shyButton
+        }
+    }
+
+    fun getIconButtonTheme(type: ButtonType): ButtonCategoryTokens {
+        return when (type) {
+            ButtonType.SHY -> shyButton
+            else -> iconButton
         }
     }
 }
