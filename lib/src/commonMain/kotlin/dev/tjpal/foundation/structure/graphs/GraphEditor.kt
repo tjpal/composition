@@ -73,6 +73,7 @@ data class EdgeSpec(
     val fromConnectorId: String,
     val toNodeId: String,
     val toConnectorId: String,
+    val associatedData: Any? = null
 )
 
 data class NodeSpec(
@@ -81,6 +82,7 @@ data class NodeSpec(
     val widthMultiplier: Int = 4,
     val heightMultiplier: Int = 4,
     val connectors: List<Connector> = emptyList(),
+    val associatedData: Any? = null,
     val content: @Composable (id: String) -> Unit
 )
 
