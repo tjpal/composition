@@ -14,8 +14,7 @@ data class WaitingTokens(
     val dotColor: Color = Color(0xFF0066FF),
     val trailColor: Color = Color(0xFF0066FF),
     val rotationDurationMs: Int = 1200,
-    /** fraction of the full circle used as trail (0..1) */
     val trailFraction: Float = 0.55f,
-    /** number of segments used to paint the trail. More segments = smoother fade. */
-    val segments: Int = 24
+    val segments: Int = 24,
+    val waitingTemplateElementGap: Dp = 8.dp
 )
