@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import dev.tjpal.foundation.basics.functional.WaitingCircle
 import dev.tjpal.foundation.basics.text.Text
 import dev.tjpal.foundation.themes.tokens.TextType

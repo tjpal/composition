@@ -44,9 +44,6 @@ data class ButtonTokens(
     }
 
     fun getIconButtonTheme(type: ButtonType): ButtonCategoryTokens {
-        return when (type) {
-            ButtonType.SHY -> shyButton
-            else -> iconButton
-        }
+        return iconButton
     }
 }

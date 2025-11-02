@@ -10,6 +10,7 @@ import dev.tjpal.foundation.themes.tokens.ButtonCategoryTokens
 import dev.tjpal.foundation.themes.tokens.ButtonTokens
 
 private val ButtonPadding = PaddingValues(24.dp, 10.dp, 24.dp, 10.dp)
+private val IconButtonSize = 48.dp
 
 fun buttonConfiguration(): ButtonTokens {
     return ButtonTokens(
@@ -36,13 +37,13 @@ fun buttonConfiguration(): ButtonTokens {
         // Icon buttons are visually compact and provide a small visual size.
         iconButton = ButtonCategoryTokens(
             flat = ButtonStateTokens(
-                modifier = Modifier.defaultCascadeBackground().size(40.dp)
+                modifier = Modifier.defaultCascadeBackground().size(IconButtonSize)
             ),
             default = ButtonStateTokens(
-                modifier = Modifier.defaultCascadeShapeShadow().defaultCascadeBackground().size(40.dp)
+                modifier = Modifier.defaultCascadeShapeShadow().defaultCascadeBackground().size(IconButtonSize)
             ),
             pressed = ButtonStateTokens(
-                modifier = Modifier.defaultInsetShapeShadow().defaultCascadeBackground().size(40.dp)
+                modifier = Modifier.defaultInsetShapeShadow().defaultCascadeBackground().size(IconButtonSize)
             )
         )
     )
