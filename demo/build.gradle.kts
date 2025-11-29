@@ -1,32 +1,27 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
-group = "dev.tjpal"
-version = "1.1.0"
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-
-    id("maven-publish")
 }
 
 kotlin {
     jvm()
-
+    
     js {
         browser()
         binaries.executable()
     }
-
+    
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
         binaries.executable()
     }
-
+    
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -37,6 +32,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(project(":lib"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -48,39 +45,17 @@ kotlin {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("composition") {
-            from(components["kotlin"])
-            groupId = project.group.toString()
-            artifactId = "composition"
-            version = project.version.toString()
+
+compose.desktop {
+    application {
+        mainClass = "dev.tjpal.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "dev.tjpal"
+            packageVersion = "1.0.0"
         }
     }
-    repositories {
-        maven {
-            name = "local"
-            mavenLocal()
-        }
-        maven {
-            name = "github"
-            url = uri("https://maven.pkg.github.com/jpal/composition")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-}
-
-tasks.register<PublishToMavenRepository>("publishToLocal") {
-    publication = publishing.publications["composition"] as MavenPublication
-    repository = publishing.repositories["local"] as MavenArtifactRepository
-}
-
-tasks.register<PublishToMavenRepository>("publishToGithub") {
-    publication = publishing.publications["composition"] as MavenPublication
-    repository = publishing.repositories["github"] as MavenArtifactRepository
 }
 
 java {
