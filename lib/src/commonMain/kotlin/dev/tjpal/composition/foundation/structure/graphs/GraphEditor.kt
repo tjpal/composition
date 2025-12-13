@@ -111,7 +111,8 @@ fun GraphEditor(
     gridExtension: Float,
     initialScaleMode: InitialScaleMode = InitialScaleMode.DEFAULT,
     onConnect: (fromNodeId: String, fromConnectorId: String, toNodeId: String, toConnectorId: String) -> Unit = { _, _, _, _ -> },
-    onDisconnect: (nodeId: String, connectorId: String) -> Unit = { _, _ -> }
+    onDisconnect: (nodeId: String, connectorId: String) -> Unit = { _, _ -> },
+    onNodeDragFinished: (movedNode: NodeSpec, finalPosition: Offset) -> Unit = { _, _ -> }
 ) {
     val theme = Theme.current
     val density = LocalDensity.current
@@ -174,7 +175,8 @@ fun GraphEditor(
                         val current = state.nodePositions[spec.id] ?: Offset.Zero
                         state.nodePositions[spec.id] = current + delta
                     },
-                    selectedConnector = selectedConnectorState.value
+                    selectedConnector = selectedConnectorState.value,
+                    onDragFinished = { onNodeDragFinished(spec, state.nodePositions[spec.id] ?: Offset.Zero) }
                 ) {
                     spec.content(spec.id)
                 }
@@ -437,6 +439,7 @@ private fun Node(
     edges: List<EdgeSpec>,
     onDragDelta: (Offset) -> Unit,
     selectedConnector: SelectedConnector?,
+    onDragFinished: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     val theme = Theme.current
@@ -447,10 +450,15 @@ private fun Node(
             size(width = width, height = height).
             then(nodeModifier).
             pointerInput(id) {
-                detectDragGestures { change, dragAmount ->
-                    change.consume()
-                    onDragDelta(Offset(dragAmount.x, dragAmount.y))
-                }
+                detectDragGestures(
+                    onDrag = { change, dragAmount ->
+                        change.consume()
+                        onDragDelta(Offset(dragAmount.x, dragAmount.y))
+                    },
+                    onDragEnd = {
+                        onDragFinished()
+                    }
+                )
             }
     ) {
         content()
