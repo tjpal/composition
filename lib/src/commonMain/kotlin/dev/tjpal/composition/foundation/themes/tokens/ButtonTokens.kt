@@ -10,7 +10,8 @@ enum class ButtonType {
 
 enum class TextType {
     PRIMARY,
-    DEFAULT
+    DEFAULT,
+    PLACEHOLDER
 }
 
 enum class DividerType {

@@ -1,7 +1,14 @@
 package dev.tjpal.composition.gallergy
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -30,7 +37,7 @@ import dev.tjpal.composition.foundation.structure.graphs.GraphEditor
 import dev.tjpal.composition.foundation.structure.graphs.GraphState
 import dev.tjpal.composition.foundation.structure.graphs.NodeSpec
 import dev.tjpal.composition.foundation.templates.FloatingBarTemplate
-import dev.tjpal.composition.foundation.themes.cascade.*
+import dev.tjpal.composition.foundation.themes.cascade.Cascade
 import dev.tjpal.composition.foundation.themes.tokens.ButtonType
 import dev.tjpal.composition.foundation.themes.tokens.FloatingBarLocation
 import dev.tjpal.composition.foundation.themes.tokens.FloatingBarOrientation
@@ -186,7 +193,7 @@ fun Gallery() {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Spacer(modifier = Modifier.height(32.dp))
-                Input(modifier = Modifier.height(32.dp).width(200.dp))
+                Input(modifier = Modifier.height(32.dp).width(200.dp), placeholder = "Enter text")
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Table(
