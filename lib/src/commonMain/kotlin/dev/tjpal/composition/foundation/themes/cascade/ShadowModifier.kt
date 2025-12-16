@@ -62,7 +62,7 @@ fun Modifier.defaultInnerInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius
     strokeSize = 2.0f,
     offsetX = 2.dp,
     offsetY = 2.dp,
-    shape =RoundedCornerShape(12.dp)
+    shape = RoundedCornerShape(cornerRadius)
 )
 
 fun Modifier.defaultCascadeBackground(cornerRadius: Dp = DefaultCornerRadius) =

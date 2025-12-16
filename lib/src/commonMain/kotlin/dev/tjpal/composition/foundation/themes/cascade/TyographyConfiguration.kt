@@ -33,6 +33,17 @@ fun typographyConfiguration(): Typographies {
                 color = Color(102, 116, 141, 255)
             )
         ),
+        placeholder = Typography(
+            style = TextStyle(
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp,
+                letterSpacing = 0.sp,
+                lineHeight = 14.sp,
+                baselineShift = BaselineShift.None,
+                color = Color(198, 206, 220, 255)
+            )
+        ),
         link = Typography(
             style = TextStyle(
                 fontFamily = FontFamily.SansSerif,
