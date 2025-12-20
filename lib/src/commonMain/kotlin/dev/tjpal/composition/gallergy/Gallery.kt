@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
+import dev.tjpal.composition.diagrams.scatter.ScatterDiagramPreview
 import dev.tjpal.composition.foundation.basics.functional.Button
 import dev.tjpal.composition.foundation.basics.functional.FloatingBar
 import dev.tjpal.composition.foundation.basics.functional.Input
@@ -141,6 +142,8 @@ fun Gallery() {
                 Button(type = ButtonType.PRIMARY) {
                     Text("Primary Button", type = TextType.PRIMARY)
                 }
+
+                ScatterDiagramPreview()
 
                 WaitingCircle()
 

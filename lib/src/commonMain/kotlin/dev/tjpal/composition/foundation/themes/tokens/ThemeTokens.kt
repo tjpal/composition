@@ -15,6 +15,7 @@ open class ThemeTokens(
     val pager: PagerTokens = PagerTokens(),
     val card: CardTokens = CardTokens(),
     val heatmap: HeatmapTokens = HeatmapTokens(),
+    val scatter: ScatterTokens = ScatterTokens(),
     val grid: GridTokens = GridTokens(),
     val graph: GraphTokens = GraphTokens(),
     // new waiting animation tokens

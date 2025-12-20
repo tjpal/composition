@@ -2,7 +2,8 @@ package dev.tjpal.composition.foundation.themes.cascade
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import dev.tjpal.composition.foundation.themes.tokens.*
+import dev.tjpal.composition.foundation.themes.tokens.Theme
+import dev.tjpal.composition.foundation.themes.tokens.ThemeTokens
 
 class CascadeThemeData : ThemeTokens(
     background = BackgroundColor,
@@ -15,6 +16,7 @@ class CascadeThemeData : ThemeTokens(
     pager = pagerConfiguration(typographyConfiguration()),
     card = createCardConfiguration(),
     heatmap = createHeatmapConfiguration(),
+    scatter = createScatterConfiguration(),
     graph = createGraphConfiguration()
 )
 
