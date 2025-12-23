@@ -60,10 +60,10 @@ compose.desktop {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(24))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
 kotlin {
-    jvmToolchain(24)
+    jvmToolchain(21)
 }
