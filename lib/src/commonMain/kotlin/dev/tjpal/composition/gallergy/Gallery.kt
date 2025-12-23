@@ -75,6 +75,8 @@ fun GraphEditorDemoScreen() {
             NodeSpec(
                 id = "B",
                 shape = NodeShape.LEFT_ROUNDED,
+                widthMultiplier = 2,
+                heightMultiplier = 2,
                 initialPosition = Offset(160f, 160f),
                 connectors = listOf(Connector("B1", EdgeSide.TOP, 1), Connector("B2", EdgeSide.TOP, 2))
             ) { id -> Text(id) },
