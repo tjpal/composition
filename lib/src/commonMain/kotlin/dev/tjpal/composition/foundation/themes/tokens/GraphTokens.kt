@@ -1,13 +1,21 @@
 package dev.tjpal.composition.foundation.themes.tokens
 
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+enum class NodeShape {
+    RECTANGLE,
+    LEFT_ROUNDED,
+    RIGHT_ROUNDED,
+    CIRCLE
+}
+
 data class GraphNodeTokens(
-    val modifier: Modifier = Modifier,
-    val defaultSizeMultiplier: Int = 4
+    val leftCornerBaseRadius: Dp = 6.dp,
+    val rightCornerBaseRadius: Dp = 6.dp,
+    val circularRadius: Dp = 32.dp,
+    val backgroundColor: Color = Color.White,
 )
 
 data class GraphEdgeTokens(
