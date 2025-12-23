@@ -1,12 +1,17 @@
 package dev.tjpal.composition.foundation.themes.cascade
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Canvas
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.PaintingStyle
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -68,6 +73,9 @@ fun Modifier.defaultInnerInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius
 fun Modifier.defaultCascadeBackground(cornerRadius: Dp = DefaultCornerRadius) =
     this.background(BackgroundColor,RoundedCornerShape(cornerRadius))
 
+fun Modifier.defaultCascadeBackground(shape: Shape) =
+    this.background(BackgroundColor,shape)
+
 fun Modifier.defaultCascadeShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.shapeShadow(
     highlightShadowColor = HighlightShadowColor,
     castShadowColor = CastShadowColor,
@@ -75,6 +83,15 @@ fun Modifier.defaultCascadeShapeShadow(cornerRadius: Dp = DefaultCornerRadius) =
     offsetX = OutsetShadowOffsetX,
     offsetY = OutsetShadowOffsetY,
     shape = RoundedCornerShape(cornerRadius)
+)
+
+fun Modifier.defaultCascadeShapeShadow(shape: Shape) = this.shapeShadow(
+    highlightShadowColor = HighlightShadowColor,
+    castShadowColor = CastShadowColor,
+    blurRadius = OutsetShadowBlurRadius,
+    offsetX = OutsetShadowOffsetX,
+    offsetY = OutsetShadowOffsetY,
+    shape = shape
 )
 
 fun Modifier.defaultInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.shapeShadow(

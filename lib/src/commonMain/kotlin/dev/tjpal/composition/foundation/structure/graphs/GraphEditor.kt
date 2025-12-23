@@ -4,37 +4,46 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.changedToDown
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import dev.tjpal.composition.foundation.basics.functional.ZoomableBox
 import dev.tjpal.composition.foundation.basics.spacing.LineGrid
-import dev.tjpal.composition.foundation.utilities.zoom.InitialScaleMode
+import dev.tjpal.composition.foundation.themes.cascade.DefaultNodeContentPadding
+import dev.tjpal.composition.foundation.themes.cascade.defaultCascadeBackground
+import dev.tjpal.composition.foundation.themes.cascade.defaultCascadeShapeShadow
+import dev.tjpal.composition.foundation.themes.tokens.GraphNodeTokens
+import dev.tjpal.composition.foundation.themes.tokens.NodeShape
 import dev.tjpal.composition.foundation.themes.tokens.Theme
-import kotlin.math.hypot
-import kotlin.math.abs
-import androidx.compose.ui.input.pointer.PointerInputScope
-import androidx.compose.ui.unit.Density
 import dev.tjpal.composition.foundation.themes.tokens.ThemeTokens
+import dev.tjpal.composition.foundation.utilities.zoom.InitialScaleMode
+import kotlin.math.abs
+import kotlin.math.hypot
 import kotlin.math.sqrt
 
 enum class EdgeSide {
@@ -85,6 +94,7 @@ data class NodeSpec(
     val heightMultiplier: Int = 4,
     val connectors: List<Connector> = emptyList(),
     val associatedData: Any? = null,
+    val shape: NodeShape = NodeShape.RECTANGLE,
     val content: @Composable (id: String) -> Unit
 )
 
@@ -167,7 +177,6 @@ fun GraphEditor(
                     width = width,
                     height = height,
                     position = pos,
-                    nodeModifier = theme.graph.node.modifier,
                     nodeSpec = spec,
                     gridSpacing = gridSpacing,
                     edges = edges,
@@ -433,7 +442,6 @@ private fun Node(
     width: Dp,
     height: Dp,
     position: Offset,
-    nodeModifier: Modifier = Modifier,
     nodeSpec: NodeSpec,
     gridSpacing: Dp,
     edges: List<EdgeSpec>,
@@ -444,12 +452,23 @@ private fun Node(
 ) {
     val theme = Theme.current
 
+    val (sizeWidth, sizeHeight) = getNodeSize(width, height, nodeSpec)
+    val nodeShape = getNodeShape(nodeSpec, theme.graph.node)
+
+    // We need to keep it in a single modifier node. Otherwise, there will be issues with the transformation
+    // since the neumorphism shadow modifier relies on drawBehind which seems to create a new layer with a
+    // different transformation.
+    val shapeModifier = Modifier
+        .defaultCascadeShapeShadow(nodeShape)
+        .defaultCascadeBackground(nodeShape)
+        .padding(DefaultNodeContentPadding)
+
     Box(
-        modifier = Modifier.
-            graphicsLayer { translationX = position.x; translationY = position.y }.
-            size(width = width, height = height).
-            then(nodeModifier).
-            pointerInput(id) {
+        modifier = Modifier
+            .graphicsLayer { translationX = position.x; translationY = position.y }
+            .size(sizeWidth, sizeHeight)
+            .then(shapeModifier)
+            .pointerInput(id) {
                 detectDragGestures(
                     onDrag = { change, dragAmount ->
                         change.consume()
@@ -464,13 +483,13 @@ private fun Node(
         content()
 
         // Draw connector dots on top of the node content so they are visible regardless of node content
-        val density = LocalDensity.current
+        val densityCanvas = LocalDensity.current
         Canvas(modifier = Modifier.matchParentSize()) {
-            val gridSpacingPx = with(density) { gridSpacing.toPx() }
+            val gridSpacingPx = with(densityCanvas) { gridSpacing.toPx() }
             val nodeWidthPx = size.width
             val nodeHeightPx = size.height
 
-            val connectorInsetPx = with(density) { theme.graph.connector.inset.toPx() }
+            val connectorInsetPx = with(densityCanvas) { theme.graph.connector.inset.toPx() }
 
             val halfGridPx = gridSpacingPx * 0.25f
 
@@ -497,5 +516,33 @@ private fun Node(
                 )
             }
         }
+    }
+}
+
+private fun getNodeShape(nodeSpec: NodeSpec, nodeTokens: GraphNodeTokens): RoundedCornerShape {
+    return when (nodeSpec.shape) {
+        NodeShape.RECTANGLE -> RoundedCornerShape(0.dp)
+        NodeShape.LEFT_ROUNDED -> RoundedCornerShape(
+            topStart = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
+            bottomStart = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
+            topEnd = 0.dp,
+            bottomEnd = 0.dp
+        )
+        NodeShape.RIGHT_ROUNDED -> RoundedCornerShape(
+            topStart = 0.dp,
+            bottomStart = 0.dp,
+            topEnd = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
+            bottomEnd = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
+        )
+        NodeShape.CIRCLE -> CircleShape
+    }
+}
+
+private fun getNodeSize(width: Dp, height: Dp, nodeSpec: NodeSpec): Pair<Dp, Dp> {
+    return if (nodeSpec.shape == NodeShape.CIRCLE) {
+        val minDp = if (width < height) width else height
+        Pair(minDp, minDp)
+    } else {
+        Pair(width, height)
     }
 }

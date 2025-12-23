@@ -23,6 +23,7 @@ import dev.tjpal.composition.diagrams.scatter.ScatterDiagramPreview
 import dev.tjpal.composition.foundation.basics.functional.Button
 import dev.tjpal.composition.foundation.basics.functional.FloatingBar
 import dev.tjpal.composition.foundation.basics.functional.Input
+import dev.tjpal.composition.foundation.basics.functional.MultiLineInput
 import dev.tjpal.composition.foundation.basics.functional.WaitingCircle
 import dev.tjpal.composition.foundation.basics.text.Link
 import dev.tjpal.composition.foundation.basics.text.Text
@@ -42,6 +43,7 @@ import dev.tjpal.composition.foundation.themes.cascade.Cascade
 import dev.tjpal.composition.foundation.themes.tokens.ButtonType
 import dev.tjpal.composition.foundation.themes.tokens.FloatingBarLocation
 import dev.tjpal.composition.foundation.themes.tokens.FloatingBarOrientation
+import dev.tjpal.composition.foundation.themes.tokens.NodeShape
 import dev.tjpal.composition.foundation.themes.tokens.TextType
 import dev.tjpal.composition.foundation.themes.tokens.Theme
 import dev.tjpal.composition.foundation.utilities.zoom.InitialScaleMode
@@ -64,16 +66,21 @@ fun GraphEditorDemoScreen() {
         listOf(
             NodeSpec(
                 id = "A",
+                shape = NodeShape.CIRCLE,
                 initialPosition = Offset(80f, 160f),
+                widthMultiplier = 3,
+                heightMultiplier = 3,
                 connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1), Connector("A2", EdgeSide.RIGHT, 0))
             ) { id -> Text(id) },
             NodeSpec(
                 id = "B",
+                shape = NodeShape.LEFT_ROUNDED,
                 initialPosition = Offset(160f, 160f),
                 connectors = listOf(Connector("B1", EdgeSide.TOP, 1), Connector("B2", EdgeSide.TOP, 2))
             ) { id -> Text(id) },
             NodeSpec(
                 id = "C",
+                shape = NodeShape.RIGHT_ROUNDED,
                 initialPosition = Offset(280f, 120f),
                 connectors = listOf(Connector("C1", EdgeSide.LEFT, 0), Connector("C2", EdgeSide.TOP, 1))
             ) { id -> Text(id) },
@@ -197,6 +204,8 @@ fun Gallery() {
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Input(modifier = Modifier.height(32.dp).width(200.dp), placeholder = "Enter text")
+                Spacer(modifier = Modifier.height(32.dp))
+                MultiLineInput(modifier = Modifier.width(400.dp))
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Table(
