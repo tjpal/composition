@@ -70,7 +70,8 @@ fun GraphEditorDemoScreen() {
                 initialPosition = Offset(80f, 160f),
                 widthMultiplier = 3,
                 heightMultiplier = 3,
-                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1), Connector("A2", EdgeSide.RIGHT, 0))
+                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1), Connector("A2", EdgeSide.RIGHT, 0)),
+                onTap = { println("Tapped node A") }
             ) { id -> Text(id) },
             NodeSpec(
                 id = "B",
@@ -78,13 +79,15 @@ fun GraphEditorDemoScreen() {
                 widthMultiplier = 2,
                 heightMultiplier = 2,
                 initialPosition = Offset(160f, 160f),
-                connectors = listOf(Connector("B1", EdgeSide.TOP, 1), Connector("B2", EdgeSide.TOP, 2))
+                connectors = listOf(Connector("B1", EdgeSide.TOP, 1), Connector("B2", EdgeSide.TOP, 2)),
+                onTap = { println("Tapped node B") }
             ) { id -> Text(id) },
             NodeSpec(
                 id = "C",
                 shape = NodeShape.RIGHT_ROUNDED,
                 initialPosition = Offset(280f, 120f),
-                connectors = listOf(Connector("C1", EdgeSide.LEFT, 0), Connector("C2", EdgeSide.TOP, 1))
+                connectors = listOf(Connector("C1", EdgeSide.LEFT, 0), Connector("C2", EdgeSide.TOP, 1)),
+                onTap = { println("Tapped node C") }
             ) { id -> Text(id) },
         )
     }

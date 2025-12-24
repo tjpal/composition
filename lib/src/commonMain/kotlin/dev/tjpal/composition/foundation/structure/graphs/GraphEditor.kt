@@ -93,6 +93,7 @@ data class NodeSpec(
     val connectors: List<Connector> = emptyList(),
     val associatedData: Any? = null,
     val shape: NodeShape = NodeShape.RECTANGLE,
+    val onTap: ((id: String) -> Unit) = {},
     val content: @Composable (id: String) -> Unit
 )
 
@@ -379,9 +380,11 @@ private fun ConnectorEndpoint(
                 if (isConnected) {
                     // Double-tabs are only relevant for connected connectors. Don't use them for unconnected connectors
                     // since the double-tab detection introduces a noticeable delay on single tabs.
-                    detectTapGestures(onDoubleTap = {
-                        onDoubleTapped(nodeId, connector.id)
-                    })
+                    detectTapGestures(
+                        onDoubleTap = {
+                            onDoubleTapped(nodeId, connector.id)
+                        }
+                    )
                 } else {
                     awaitPointerEventScope {
                         while (true) {
@@ -442,6 +445,11 @@ private fun Node(
             .graphicsLayer { translationX = position.x; translationY = position.y }
             .size(sizeWidth, sizeHeight)
             .then(shapeModifier)
+            .pointerInput(id) {
+                detectTapGestures(onTap = {
+                    nodeSpec.onTap.invoke(id)
+                })
+            }
             .pointerInput(id) {
                 detectDragGestures(
                     onDrag = { change, dragAmount ->
