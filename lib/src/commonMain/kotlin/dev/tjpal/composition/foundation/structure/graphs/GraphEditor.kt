@@ -2,6 +2,7 @@ package dev.tjpal.composition.foundation.structure.graphs
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerInputScope
@@ -40,11 +40,9 @@ import dev.tjpal.composition.foundation.themes.cascade.defaultCascadeShapeShadow
 import dev.tjpal.composition.foundation.themes.tokens.GraphNodeTokens
 import dev.tjpal.composition.foundation.themes.tokens.NodeShape
 import dev.tjpal.composition.foundation.themes.tokens.Theme
-import dev.tjpal.composition.foundation.themes.tokens.ThemeTokens
 import dev.tjpal.composition.foundation.utilities.zoom.InitialScaleMode
 import kotlin.math.abs
 import kotlin.math.hypot
-import kotlin.math.sqrt
 
 enum class EdgeSide {
     TOP, BOTTOM, LEFT, RIGHT
@@ -137,15 +135,8 @@ fun GraphEditor(
         LineGrid(spacing = gridSpacing, area = gridRect) {
             Canvas(Modifier.fillMaxSize().pointerInput(nodes, edges) {
                 handleGraphPointerInput(
-                    nodes = nodes,
-                    state = state,
-                    gridSpacing = gridSpacing,
-                    density = density,
-                    theme = theme,
-                    selectedConnectorState = selectedConnectorState,
                     currentPointerState = currentPointerState,
-                    onConnect = onConnect,
-                    onDisconnect = onDisconnect
+                    selectedConnectorState = selectedConnectorState
                 )
             }) {
                 val stroke = with(density) {
@@ -185,7 +176,14 @@ fun GraphEditor(
                         state.nodePositions[spec.id] = current + delta
                     },
                     selectedConnector = selectedConnectorState.value,
-                    onDragFinished = { onNodeDragFinished(spec, state.nodePositions[spec.id] ?: Offset.Zero) }
+                    onDragFinished = { onNodeDragFinished(spec, state.nodePositions[spec.id] ?: Offset.Zero) },
+                    onConnectorTap = { _, connectorId, side ->
+                        handleConnectorTap(spec, connectorId, side, density, gridSpacing, state, selectedConnectorState, onConnect)
+                    },
+                    onConnectorDoubleTap = { nodeId, connectorId ->
+                        onDisconnect(nodeId, connectorId)
+                        selectedConnectorState.value = null
+                    }
                 ) {
                     spec.content(spec.id)
                 }
@@ -194,138 +192,53 @@ fun GraphEditor(
     }
 }
 
-private suspend fun PointerInputScope.handleGraphPointerInput(
-    nodes: List<NodeSpec>,
-    state: GraphState,
-    gridSpacing: Dp,
+private fun handleConnectorTap(
+    nodeSpec: NodeSpec,
+    connectorId: String,
+    side: EdgeSide,
     density: Density,
-    theme: ThemeTokens,
+    gridSpacing: Dp,
+    state: GraphState,
     selectedConnectorState: MutableState<SelectedConnector?>,
+    onConnect: (fromNodeId: String, fromConnectorId: String, toNodeId: String, toConnectorId: String) -> Unit
+) {
+    val gridSpacingPx = with(density) { gridSpacing.toPx() }
+    val nodeWidthPx = gridSpacingPx * nodeSpec.widthMultiplier
+    val nodeHeightPx = gridSpacingPx * nodeSpec.heightMultiplier
+
+    val connector = nodeSpec.connectors.firstOrNull { it.id == connectorId } ?: return
+
+    val absoluteCenter = (state.nodePositions[nodeSpec.id] ?: Offset.Zero) + connector.position(nodeSpec, nodeWidthPx, nodeHeightPx, gridSpacingPx)
+
+    val currentSelection = selectedConnectorState.value
+
+    if (currentSelection == null) {
+        selectedConnectorState.value = SelectedConnector(nodeId = nodeSpec.id, connectorId = connectorId, position = absoluteCenter, side = side)
+    } else {
+        if (!(currentSelection.nodeId == nodeSpec.id && currentSelection.connectorId == connectorId)) {
+            onConnect(currentSelection.nodeId, currentSelection.connectorId, nodeSpec.id, connectorId)
+            selectedConnectorState.value = null
+        }
+    }
+}
+
+private suspend fun PointerInputScope.handleGraphPointerInput(
     currentPointerState: MutableState<Offset>,
-    onConnect: (fromNodeId: String, fromConnectorId: String, toNodeId: String, toConnectorId: String) -> Unit,
-    onDisconnect: (nodeId: String, connectorId: String) -> Unit
+    selectedConnectorState: MutableState<SelectedConnector?>
 ) {
     awaitPointerEventScope {
-        // TODO: Is there a better way to detect double-tap/double-click in a pointerInput block?
-        var lastDownTime: Long = 0L
-        var lastDownNodeId: String? = null
-        var lastDownConnectorId: String? = null
-        val doubleTabTimeoutMS = 300L
-
         while (true) {
             val event = awaitPointerEvent()
             val p = event.changes.firstOrNull()?.position ?: continue
             currentPointerState.value = p
 
-            // Build list of connector absolute positions for hit testing on each event
-            val gridSpacingPx = with(density) { gridSpacing.toPx() }
-            val connectorPositions = buildConnectorPositions(nodes, state, gridSpacingPx, density, theme)
-
-            // If pointer was pressed -> evaluate hit
+            // If pointer was pressed on empty canvas -> exit connecting mode
             if (event.changes.any { it.changedToDown() }) {
-                val defaultHitRadiusPx = with(density) { theme.graph.connector.notConnectedDot.hitRadius.toPx() }
-                val hit = findClosestConnector(p, connectorPositions, defaultHitRadiusPx)
-
-                if (hit != null) {
-                    val (node, connector, pos) = hit
-
-                    // Detect double tap / double click: two downs on the same connector within timeout
-                    val currentDownTime = event.changes.firstOrNull()?.uptimeMillis ?: 0L
-                    val isDouble = lastDownNodeId == node.id &&
-                        lastDownConnectorId == connector.id &&
-                        (currentDownTime - lastDownTime) <= doubleTabTimeoutMS &&
-                        lastDownTime != 0L
-
-                    if (isDouble) {
-                        onDisconnect(node.id, connector.id)
-                        selectedConnectorState.value = null
-
-                        // reset last down tracking
-                        lastDownTime = 0L
-                        lastDownNodeId = null
-                        lastDownConnectorId = null
-
-                        event.changes.forEach { it.consume() }
-                        continue
-                    } else {
-                        lastDownTime = currentDownTime
-                        lastDownNodeId = node.id
-                        lastDownConnectorId = connector.id
-
-                        val currentSelection = selectedConnectorState.value
-
-                        if (currentSelection == null) {
-                            // start connecting when clicking a not-connected connector
-                            selectedConnectorState.value = SelectedConnector(nodeId = node.id, connectorId = connector.id, position = pos, side = connector.side)
-                        } else {
-                            // if second hit is different connector -> call onConnect and exit connecting mode
-                            if (!(currentSelection.nodeId == node.id && currentSelection.connectorId == connector.id)) {
-                                onConnect(currentSelection.nodeId, currentSelection.connectorId, node.id, connector.id)
-                                selectedConnectorState.value = null
-                            }
-                        }
-                    }
-
-                    event.changes.forEach { it.consume() }
-                } else {
-                    // clicked outside any connector -> exit connecting mode
-                    selectedConnectorState.value = null
-                }
+                // A connector composable will consume tap events when tapped. If we receive a down event here,
+                // it means the user tapped outside connectors (or the connector didn't consume) -> clear selection.
+                selectedConnectorState.value = null
             }
         }
-    }
-}
-
-private fun buildConnectorPositions(
-    nodes: List<NodeSpec>,
-    state: GraphState,
-    gridSpacingPx: Float,
-    density: Density,
-    theme: ThemeTokens
-): List<Triple<NodeSpec, Connector, Offset>> {
-    val connectorPositions = mutableListOf<Triple<NodeSpec, Connector, Offset>>()
-
-    nodes.forEach { node ->
-        val nodePos = state.nodePositions[node.id] ?: Offset.Zero
-
-        val nodeWidth = (gridSpacingPx * node.widthMultiplier)
-        val nodeHeight = (gridSpacingPx * node.heightMultiplier)
-
-        val insetPx = with(density) { theme.graph.connector.inset.toPx() }
-        val halfGridPx = gridSpacingPx * 0.25f
-
-        node.connectors.forEach { connector ->
-            val final = computeConnectorFinalPosition(
-                connector = connector,
-                nodeSpec = node,
-                nodeWidthPx = nodeWidth,
-                nodeHeightPx = nodeHeight,
-                gridSpacingPx = gridSpacingPx,
-                insetPx = insetPx,
-                orthogonalAmountPx = halfGridPx
-            ) + nodePos
-
-            connectorPositions.add(Triple(node, connector, final))
-        }
-    }
-
-    return connectorPositions
-}
-
-private fun findClosestConnector(
-    p: Offset,
-    connectorPositions: List<Triple<NodeSpec, Connector, Offset>>,
-    hitRadiusPx: Float
-): Triple<NodeSpec, Connector, Offset>? {
-    return connectorPositions.minByOrNull { (_, _, pos) ->
-        val dx = pos.x - p.x
-        val dy = pos.y - p.y
-        dx * dx + dy * dy
-    }?.let { (node, connector, pos) ->
-        val dx = pos.x - p.x
-        val dy = pos.y - p.y
-        val dist = sqrt(dx * dx + dy * dy)
-        if (dist <= hitRadiusPx) Triple(node, connector, pos) else null
     }
 }
 
@@ -437,6 +350,65 @@ private fun computeConnectorFinalPosition(
 }
 
 @Composable
+private fun ConnectorEndpoint(
+    nodeId: String,
+    connector: Connector,
+    localCenterPx: Offset,
+    isConnected: Boolean,
+    dotColor: Color,
+    radius: Dp,
+    filled: Boolean,
+    strokeWidth: Dp,
+    side: EdgeSide,
+    onPressed: (nodeId: String, connectorId: String, side: EdgeSide) -> Unit,
+    onDoubleTapped: (nodeId: String, connectorId: String) -> Unit,
+) {
+    val density = LocalDensity.current
+    val radiusPx = with(density) { radius.toPx() }
+    val diameterDp = with(density) { (radiusPx * 2f).toDp() }
+
+    // Compute top-left offset so the composable's center matches localCenterPx (px)
+    val topLeftXp = localCenterPx.x - radiusPx
+    val topLeftYp = localCenterPx.y - radiusPx
+
+    Box(
+        modifier = Modifier
+            .graphicsLayer { translationX = topLeftXp; translationY = topLeftYp }
+            .size(diameterDp)
+            .pointerInput(nodeId, connector.id, isConnected) {
+                if (isConnected) {
+                    // Double-tabs are only relevant for connected connectors. Don't use them for unconnected connectors
+                    // since the double-tab detection introduces a noticeable delay on single tabs.
+                    detectTapGestures(onDoubleTap = {
+                        onDoubleTapped(nodeId, connector.id)
+                    })
+                } else {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            val firstDown = event.changes.firstOrNull { it.changedToDown() } ?: continue
+                            firstDown.consume()
+
+                            onPressed(nodeId, connector.id, side)
+                        }
+                    }
+                }
+            }
+    ) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val center = Offset(size.width / 2f, size.height / 2f)
+            val radius = size.minDimension / 2f
+
+            if (filled) {
+                drawCircle(color = dotColor, radius = radius, center = center)
+            } else {
+                drawCircle(color = dotColor, radius = radius, center = center, style = Stroke(width = strokeWidth.toPx()))
+            }
+        }
+    }
+}
+
+@Composable
 private fun Node(
     id: String,
     width: Dp,
@@ -448,6 +420,8 @@ private fun Node(
     onDragDelta: (Offset) -> Unit,
     selectedConnector: SelectedConnector?,
     onDragFinished: () -> Unit,
+    onConnectorTap: (nodeId: String, connectorId: String, side: EdgeSide) -> Unit,
+    onConnectorDoubleTap: (nodeId: String, connectorId: String) -> Unit,
     content: @Composable () -> Unit,
 ) {
     val theme = Theme.current
@@ -482,39 +456,44 @@ private fun Node(
     ) {
         content()
 
-        // Draw connector dots on top of the node content so they are visible regardless of node content
+        // Draw connector endpoints on top of the node content so they are visible and handle pointer events
         val densityCanvas = LocalDensity.current
-        Canvas(modifier = Modifier.matchParentSize()) {
-            val gridSpacingPx = with(densityCanvas) { gridSpacing.toPx() }
-            val nodeWidthPx = size.width
-            val nodeHeightPx = size.height
+        val gridSpacingPx = with(densityCanvas) { gridSpacing.toPx() }
+        val nodeWidthPx = with(densityCanvas) { sizeWidth.toPx() }
+        val nodeHeightPx = with(densityCanvas) { sizeHeight.toPx() }
 
-            val connectorInsetPx = with(densityCanvas) { theme.graph.connector.inset.toPx() }
+        val connectorInsetPx = with(densityCanvas) { theme.graph.connector.inset.toPx() }
 
-            val halfGridPx = gridSpacingPx * 0.25f
+        val halfGridPx = gridSpacingPx * 0.25f
 
-            nodeSpec.connectors.forEach { connector ->
-                val isConnected = edges.any { edge ->
-                    (edge.fromNodeId == nodeSpec.id && edge.fromConnectorId == connector.id) ||
-                        (edge.toNodeId == nodeSpec.id && edge.toConnectorId == connector.id)
-                }
-
-                // Only not-connected connectors can be the start of connecting mode; if selectedConnector references this, paint as connecting
-                val dotTokens = if (selectedConnector?.nodeId == nodeSpec.id && selectedConnector.connectorId == connector.id) {
-                    theme.graph.connector.connectingDot
-                } else {
-                    if (isConnected) theme.graph.connector.connectedDot else theme.graph.connector.notConnectedDot
-                }
-
-                val finalPos = computeConnectorFinalPosition(connector, nodeSpec, nodeWidthPx, nodeHeightPx, gridSpacingPx, connectorInsetPx, halfGridPx)
-
-                drawCircle(
-                    color = dotTokens.color,
-                    radius = dotTokens.radius.toPx(),
-                    center = finalPos,
-                    style = if(dotTokens.filled) Fill else Stroke(width = dotTokens.strokeWidth.toPx())
-                )
+        nodeSpec.connectors.forEach { connector ->
+            val isConnected = edges.any { edge ->
+                (edge.fromNodeId == nodeSpec.id && edge.fromConnectorId == connector.id) ||
+                    (edge.toNodeId == nodeSpec.id && edge.toConnectorId == connector.id)
             }
+
+            // Only not-connected connectors can be the start of connecting mode; if selectedConnector references this, paint as connecting
+            val dotTokens = if (selectedConnector?.nodeId == nodeSpec.id && selectedConnector.connectorId == connector.id) {
+                theme.graph.connector.connectingDot
+            } else {
+                if (isConnected) theme.graph.connector.connectedDot else theme.graph.connector.notConnectedDot
+            }
+
+            val finalPos = computeConnectorFinalPosition(connector, nodeSpec, nodeWidthPx, nodeHeightPx, gridSpacingPx, connectorInsetPx, halfGridPx)
+
+            ConnectorEndpoint(
+                nodeId = nodeSpec.id,
+                connector = connector,
+                localCenterPx = finalPos,
+                isConnected = isConnected,
+                dotColor = dotTokens.color,
+                radius = dotTokens.radius,
+                filled = dotTokens.filled,
+                strokeWidth = dotTokens.strokeWidth,
+                side = connector.side,
+                onPressed = { nodeId, connectorId, side -> onConnectorTap(nodeId, connectorId, side) },
+                onDoubleTapped = { nodeId, connectorId -> onConnectorDoubleTap(nodeId, connectorId) }
+            )
         }
     }
 }
