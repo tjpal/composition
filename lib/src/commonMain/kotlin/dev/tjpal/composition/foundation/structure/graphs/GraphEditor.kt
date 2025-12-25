@@ -121,7 +121,8 @@ fun GraphEditor(
     initialScaleMode: InitialScaleMode = InitialScaleMode.DEFAULT,
     onConnect: (fromNodeId: String, fromConnectorId: String, toNodeId: String, toConnectorId: String) -> Unit = { _, _, _, _ -> },
     onDisconnect: (nodeId: String, connectorId: String) -> Unit = { _, _ -> },
-    onNodeDragFinished: (movedNode: NodeSpec, finalPosition: Offset) -> Unit = { _, _ -> }
+    onNodeDragFinished: (movedNode: NodeSpec, finalPosition: Offset) -> Unit = { _, _ -> },
+    onNodeTapped: (node: NodeSpec) -> Unit = {}
 ) {
     val theme = Theme.current
     val density = LocalDensity.current
@@ -184,7 +185,8 @@ fun GraphEditor(
                     onConnectorDoubleTap = { nodeId, connectorId ->
                         onDisconnect(nodeId, connectorId)
                         selectedConnectorState.value = null
-                    }
+                    },
+                    onNodeTapped = onNodeTapped
                 ) {
                     spec.content(spec.id)
                 }
@@ -425,6 +427,7 @@ private fun Node(
     onDragFinished: () -> Unit,
     onConnectorTap: (nodeId: String, connectorId: String, side: EdgeSide) -> Unit,
     onConnectorDoubleTap: (nodeId: String, connectorId: String) -> Unit,
+    onNodeTapped: (node: NodeSpec) -> Unit,
     content: @Composable () -> Unit,
 ) {
     val theme = Theme.current
@@ -448,6 +451,7 @@ private fun Node(
             .pointerInput(id) {
                 detectTapGestures(onTap = {
                     nodeSpec.onTap.invoke(id)
+                    onNodeTapped(nodeSpec)
                 })
             }
             .pointerInput(id) {
