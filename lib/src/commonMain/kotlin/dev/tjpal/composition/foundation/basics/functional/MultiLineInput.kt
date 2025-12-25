@@ -105,10 +105,11 @@ fun MultiLineInput(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
-    val textFieldValueState = remember(value) { mutableStateOf(TextFieldValue(value ?: "")) }
+    val textFieldValueState = remember { mutableStateOf(TextFieldValue(value ?: "")) }
 
     LaunchedEffect(value) {
-        if (value != null) {
+
+        if (value != null && value != textFieldValueState.value.text) {
             val prevSelection = textFieldValueState.value.selection
             val selStart = prevSelection.start.coerceIn(0, value.length)
             val selEnd = prevSelection.end.coerceIn(0, value.length)
@@ -117,9 +118,7 @@ fun MultiLineInput(
     }
 
     val onTextFieldValueChanged: (TextFieldValue) -> Unit = { newValue ->
-        if (value == null) {
-            textFieldValueState.value = newValue
-        }
+        textFieldValueState.value = newValue
         onValueChange(newValue.text)
     }
 
