@@ -39,11 +39,11 @@ fun MultiLineInput(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     placeholder: String? = null,
-    maxLines: Int = 4,
+    numVisibleLines: Int = 4,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
-    require(maxLines >= 1) { "maxLines must be >= 1" }
+    require(numVisibleLines >= 1) { "maxLines must be >= 1" }
 
     val tokens = Theme.current.inputField
     val typography = tokens.typography
@@ -51,7 +51,7 @@ fun MultiLineInput(
 
     val density = LocalDensity.current
 
-    val desiredHeightDp = calculateDesiredHeightDp(maxLines, typography.style.lineHeight, tokens.rowHeightFallback, contentPadding, density)
+    val desiredHeightDp = calculateDesiredHeightDp(numVisibleLines, typography.style.lineHeight, tokens.rowHeightFallback, contentPadding, density)
 
     val scrollState = rememberScrollState()
     var containerHeightPx by remember { mutableStateOf(0f) }
@@ -101,7 +101,7 @@ fun MultiLineInput(
     value: String? = null,
     onValueChange: (String) -> Unit = {},
     placeholder: String? = null,
-    maxLines: Int = 4,
+    numVisibleLines: Int = 4,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
@@ -127,7 +127,7 @@ fun MultiLineInput(
         value = textFieldValueState.value,
         onValueChange = onTextFieldValueChanged,
         placeholder = placeholder,
-        maxLines = maxLines,
+        numVisibleLines = numVisibleLines,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions
     )
