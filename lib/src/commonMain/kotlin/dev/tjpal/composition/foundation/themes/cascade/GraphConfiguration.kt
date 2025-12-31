@@ -23,15 +23,15 @@ fun createGraphConfiguration(): GraphTokens {
             color = Color(202, 202, 202, 255)
         ),
         connector = GraphConnectorTokens(
-            connectedDot = GraphConnectorDotTokens(Color(46, 204, 113, 255), radius = 4.dp, filled = true),
-            connectingDot = GraphConnectorDotTokens(Color(255, 167, 38, 255), radius = 4.dp, filled = true),
+            connectedDot = GraphConnectorDotTokens(Color(108, 108, 108, 255), radius = 6.dp, filled = true),
+            connectingDot = GraphConnectorDotTokens(Color(108, 108, 108, 255), radius = 6.dp, filled = true),
             notConnectedDot = GraphConnectorDotTokens(
                 Color(108, 108, 108, 255),
-                radius = 4.dp,
+                radius = 6.dp,
                 filled = false,
                 strokeWidth = 1.dp
             ),
-            inset = 3.dp
+            inset = 6.dp
         )
     )
 }

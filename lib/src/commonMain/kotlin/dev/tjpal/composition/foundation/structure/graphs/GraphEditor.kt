@@ -293,7 +293,7 @@ private fun orthogonalOffsetForSide(side: EdgeSide, amount: Float): Offset {
     return when (side) {
         EdgeSide.TOP -> Offset(-amount, 0f)
         EdgeSide.RIGHT -> Offset(0f, -amount)
-        EdgeSide.BOTTOM -> Offset(amount, 0f)
+        EdgeSide.BOTTOM -> Offset(-amount, 0f)
         EdgeSide.LEFT -> Offset(0f, -amount)
     }
 }
@@ -347,10 +347,16 @@ private fun computeConnectorFinalPosition(
 ): Offset {
     val basePos = connector.position(nodeSpec, nodeWidthPx, nodeHeightPx, gridSpacingPx)
     val dir = directionForSide(connector.side)
-    val inwardInset = Offset(-dir.x * insetPx, -dir.y * insetPx)
+    val inwardInset = insetShift(dir, insetPx)
     val orthogonal = orthogonalOffsetForSide(connector.side, orthogonalAmountPx)
+
     return basePos + inwardInset + orthogonal
 }
+
+private fun insetShift(dir: Offset, insetPx: Float) = Offset(
+    if(abs(dir.y) < 0.01f) -insetPx else 0f,
+    if(abs(dir.x) < 0.01f) -insetPx else 0f
+)
 
 @Composable
 private fun ConnectorEndpoint(
