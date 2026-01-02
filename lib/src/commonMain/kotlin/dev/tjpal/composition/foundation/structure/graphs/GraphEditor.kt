@@ -52,7 +52,8 @@ data class Connector(
     val id: String,
     val side: EdgeSide,
     val index: Int = 0,
-    val positionProvider: ((node: NodeSpec, nodeWidthPx: Float, nodeHeightPx: Float, gridSpacingPx: Float) -> Offset)? = null
+    val positionProvider: ((node: NodeSpec, nodeWidthPx: Float, nodeHeightPx: Float, gridSpacingPx: Float) -> Offset)? = null,
+    val allowsMultipleConnections: Boolean = false
 ) {
     fun position(node: NodeSpec, nodeWidthPx: Float, nodeHeightPx: Float, gridSpacingPx: Float): Offset {
         positionProvider?.let { return it(node, nodeWidthPx, nodeHeightPx, gridSpacingPx) }
@@ -158,7 +159,6 @@ fun GraphEditor(
                 }
             }
 
-            // Nodes are drawn after the edges canvas so their content and connectors appear on top
             nodes.forEach { spec ->
                 val pos by remember(spec.id) { derivedStateOf { state.nodePositions[spec.id] ?: Offset.Zero } }
 
@@ -368,7 +368,11 @@ private fun ConnectorEndpoint(
     radius: Dp,
     filled: Boolean,
     strokeWidth: Dp,
+    allowsMultipleConnections: Boolean,
+    canStartConnection: Boolean,
     side: EdgeSide,
+    crossColor: Color,
+    crossPlusFactor: Float,
     onPressed: (nodeId: String, connectorId: String, side: EdgeSide) -> Unit,
     onDoubleTapped: (nodeId: String, connectorId: String) -> Unit,
 ) {
@@ -376,19 +380,25 @@ private fun ConnectorEndpoint(
     val radiusPx = with(density) { radius.toPx() }
     val diameterDp = with(density) { (radiusPx * 2f).toDp() }
 
-    // Compute top-left offset so the composable's center matches localCenterPx (px)
     val topLeftXp = localCenterPx.x - radiusPx
     val topLeftYp = localCenterPx.y - radiusPx
+
+    val strokeWidthPx = with(density) { strokeWidth.toPx() }
 
     Box(
         modifier = Modifier
             .graphicsLayer { translationX = topLeftXp; translationY = topLeftYp }
             .size(diameterDp)
-            .pointerInput(nodeId, connector.id, isConnected) {
+            .pointerInput(nodeId, connector.id, isConnected, canStartConnection) {
                 if (isConnected) {
                     // Double-tabs are only relevant for connected connectors. Don't use them for unconnected connectors
                     // since the double-tab detection introduces a noticeable delay on single tabs.
                     detectTapGestures(
+                        onTap = if (canStartConnection) {
+                            {
+                                onPressed(nodeId, connector.id, side)
+                            }
+                        } else null,
                         onDoubleTap = {
                             onDoubleTapped(nodeId, connector.id)
                         }
@@ -413,10 +423,32 @@ private fun ConnectorEndpoint(
             if (filled) {
                 drawCircle(color = dotColor, radius = radius, center = center)
             } else {
-                drawCircle(color = dotColor, radius = radius, center = center, style = Stroke(width = strokeWidth.toPx()))
+                drawCircle(color = dotColor, radius = radius, center = center, style = Stroke(width = strokeWidthPx))
+            }
+
+            if (allowsMultipleConnections) {
+                drawMultipleConnectionsIndicator(radius, crossPlusFactor, crossColor, strokeWidthPx, center)
             }
         }
     }
+}
+
+fun DrawScope.drawMultipleConnectionsIndicator(radius: Float, crossPlusFactor: Float, crossColor: Color, strokeWidthPx: Float, center: Offset) {
+    val plusLength = radius * crossPlusFactor
+    val halfPlus = plusLength / 2f
+
+    drawLine(
+        color = crossColor,
+        start = Offset(center.x - halfPlus, center.y),
+        end = Offset(center.x + halfPlus, center.y),
+        strokeWidth = strokeWidthPx
+    )
+    drawLine(
+        color = crossColor,
+        start = Offset(center.x, center.y - halfPlus),
+        end = Offset(center.x, center.y + halfPlus),
+        strokeWidth = strokeWidthPx
+    )
 }
 
 @Composable
@@ -441,9 +473,6 @@ private fun Node(
     val (sizeWidth, sizeHeight) = getNodeSize(width, height, nodeSpec)
     val nodeShape = getNodeShape(nodeSpec, theme.graph.node)
 
-    // We need to keep it in a single modifier node. Otherwise, there will be issues with the transformation
-    // since the neumorphism shadow modifier relies on drawBehind which seems to create a new layer with a
-    // different transformation.
     val shapeModifier = Modifier
         .defaultCascadeShapeShadow(nodeShape)
         .defaultCascadeBackground(nodeShape)
@@ -474,7 +503,6 @@ private fun Node(
     ) {
         content()
 
-        // Draw connector endpoints on top of the node content so they are visible and handle pointer events
         val densityCanvas = LocalDensity.current
         val gridSpacingPx = with(densityCanvas) { gridSpacing.toPx() }
         val nodeWidthPx = with(densityCanvas) { sizeWidth.toPx() }
@@ -485,16 +513,21 @@ private fun Node(
         val halfGridPx = gridSpacingPx * 0.25f
 
         nodeSpec.connectors.forEach { connector ->
-            val isConnected = edges.any { edge ->
-                (edge.fromNodeId == nodeSpec.id && edge.fromConnectorId == connector.id) ||
-                    (edge.toNodeId == nodeSpec.id && edge.toConnectorId == connector.id)
-            }
+            val isConnected = connector.isConnected(edges, nodeSpec.id)
+            val canStartConnection = connector.canStartNewConnection(edges, nodeSpec.id)
 
-            // Only not-connected connectors can be the start of connecting mode; if selectedConnector references this, paint as connecting
             val dotTokens = if (selectedConnector?.nodeId == nodeSpec.id && selectedConnector.connectorId == connector.id) {
                 theme.graph.connector.connectingDot
             } else {
                 if (isConnected) theme.graph.connector.connectedDot else theme.graph.connector.notConnectedDot
+            }
+
+            val crossTokens = theme.graph.connector.cross
+            val isConnecting = selectedConnector?.nodeId == nodeSpec.id && selectedConnector.connectorId == connector.id
+            val crossColor = if (connector.allowsMultipleConnections && (isConnected || isConnecting)) {
+                crossTokens.connectedColor
+            } else {
+                crossTokens.notConnectedColor
             }
 
             val finalPos = computeConnectorFinalPosition(connector, nodeSpec, nodeWidthPx, nodeHeightPx, gridSpacingPx, connectorInsetPx, halfGridPx)
@@ -508,7 +541,11 @@ private fun Node(
                 radius = dotTokens.radius,
                 filled = dotTokens.filled,
                 strokeWidth = dotTokens.strokeWidth,
+                allowsMultipleConnections = connector.allowsMultipleConnections,
+                canStartConnection = canStartConnection,
                 side = connector.side,
+                crossColor = crossColor,
+                crossPlusFactor = crossTokens.plusLengthFactor,
                 onPressed = { nodeId, connectorId, side -> onConnectorTap(nodeId, connectorId, side) },
                 onDoubleTapped = { nodeId, connectorId -> onConnectorDoubleTap(nodeId, connectorId) }
             )
@@ -542,4 +579,16 @@ private fun getNodeSize(width: Dp, height: Dp, nodeSpec: NodeSpec): Pair<Dp, Dp>
     } else {
         Pair(width, height)
     }
+}
+
+internal fun Connector.isConnected(edges: List<EdgeSpec>, nodeId: String): Boolean {
+    return edges.any { edge ->
+        (edge.fromNodeId == nodeId && edge.fromConnectorId == id) ||
+            (edge.toNodeId == nodeId && edge.toConnectorId == id)
+    }
+}
+
+internal fun Connector.canStartNewConnection(edges: List<EdgeSpec>, nodeId: String): Boolean {
+    val connected = isConnected(edges, nodeId)
+    return !connected || allowsMultipleConnections
 }

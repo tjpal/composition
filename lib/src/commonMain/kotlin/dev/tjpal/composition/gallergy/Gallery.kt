@@ -72,7 +72,7 @@ fun GraphEditorDemoScreen() {
                 initialPosition = Offset(80f, 160f),
                 widthMultiplier = 3,
                 heightMultiplier = 3,
-                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1), Connector("A2", EdgeSide.RIGHT, 0)),
+                connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1, allowsMultipleConnections = true), Connector("A2", EdgeSide.RIGHT, 0)),
                 onTap = { println("Tapped node A") }
             ) { id -> Text(id) },
             NodeSpec(
