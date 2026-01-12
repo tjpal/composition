@@ -17,11 +17,12 @@ class CascadeThemeData : ThemeTokens(
     card = createCardConfiguration(),
     heatmap = createHeatmapConfiguration(),
     scatter = createScatterConfiguration(),
-    graph = createGraphConfiguration()
+    graph = createGraphConfiguration(),
+    funnel = createFunnelConfiguration()
 )
 
 @Composable
-fun Cascade( content: @Composable () -> Unit) {
+fun Cascade(content: @Composable () -> Unit) {
     CompositionLocalProvider(Theme provides CascadeThemeData()) {
         content()
     }

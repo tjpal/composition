@@ -2,7 +2,6 @@ package dev.tjpal.composition.foundation.themes.tokens
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
-import dev.tjpal.composition.foundation.themes.tokens.ButtonTokens
 
 open class ThemeTokens(
     val background: Color = Color.White,
@@ -18,8 +17,8 @@ open class ThemeTokens(
     val scatter: ScatterTokens = ScatterTokens(),
     val grid: GridTokens = GridTokens(),
     val graph: GraphTokens = GraphTokens(),
-    // new waiting animation tokens
-    val waiting: WaitingTokens = WaitingTokens()
+    val waiting: WaitingTokens = WaitingTokens(),
+    val funnel: FunnelTokens = FunnelTokens()
 )
 
 val Theme = compositionLocalOf { ThemeTokens() }
