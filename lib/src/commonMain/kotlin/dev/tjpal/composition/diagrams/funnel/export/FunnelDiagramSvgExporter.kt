@@ -14,7 +14,8 @@ fun exportFunnelDiagramToSvg(
     categories: Int,
     containerSize: Size,
     tokens: FunnelTokens,
-    tooltipProvider: (FunnelItem) -> String? = { it.label }
+    tooltipProvider: (FunnelItem) -> String? = { it.label },
+    linkProvider: (FunnelItem) -> String? = { null }
 ): String {
     if (stages <= 0 || subStagesPerStage <= 0 || categories <= 0) {
         throw IllegalArgumentException("Stages, sub-stages per stage, and categories must be greater than zero.")
@@ -102,6 +103,11 @@ fun exportFunnelDiagramToSvg(
     }
 
     placedItems.forEach { placedItem ->
+        val link = linkProvider(placedItem.item)
+        if (!link.isNullOrBlank()) {
+            svgBuilder.openTag("a", mapOf("href" to link))
+        }
+
         svgBuilder.openTag("g")
 
         val tooltipText = tooltipProvider(placedItem.item)
@@ -121,6 +127,10 @@ fun exportFunnelDiagramToSvg(
         )
 
         svgBuilder.closeTag("g")
+
+        if (!link.isNullOrBlank()) {
+            svgBuilder.closeTag("a")
+        }
     }
 
     return svgBuilder.build()
