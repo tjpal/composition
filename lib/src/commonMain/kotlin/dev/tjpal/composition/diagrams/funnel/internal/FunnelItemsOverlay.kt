@@ -27,7 +27,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
-private data class PlacedItem(
+internal data class PlacedItem(
     val item: FunnelItem,
     val center: Offset,
     val radius: Float
@@ -146,7 +146,7 @@ internal fun FunnelItemsOverlay(
     }
 }
 
-private fun computePlacedItems(
+internal fun computePlacedItems(
     items: List<FunnelItem>,
     containerSize: Size,
     stages: Int,
@@ -205,7 +205,7 @@ private fun computePlacedItems(
     return result
 }
 
-private fun computeCellPlacement(
+internal fun computeCellPlacement(
     cellItems: List<FunnelItem>,
     innerLeft: Float,
     innerTop: Float,
