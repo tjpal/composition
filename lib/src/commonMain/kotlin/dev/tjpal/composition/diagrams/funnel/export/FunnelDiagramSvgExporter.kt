@@ -3,8 +3,8 @@ package dev.tjpal.composition.diagrams.funnel.export
 import androidx.compose.ui.geometry.Size
 import dev.tjpal.composition.diagrams.funnel.internal.computePlacedItems
 import dev.tjpal.composition.diagrams.funnel.models.FunnelItem
-import dev.tjpal.composition.export.svg.SvgBuilder
-import dev.tjpal.composition.export.svg.toSvgColor
+import dev.tjpal.composition.diagrams.svg.SvgBuilder
+import dev.tjpal.composition.diagrams.svg.toSvgColor
 import dev.tjpal.composition.foundation.themes.tokens.FunnelTokens
 
 fun exportFunnelDiagramToSvg(

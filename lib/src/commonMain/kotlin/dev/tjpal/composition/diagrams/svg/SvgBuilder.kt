@@ -1,4 +1,4 @@
-package dev.tjpal.composition.export.svg
+package dev.tjpal.composition.diagrams.svg
 
 import androidx.compose.ui.graphics.Color
 import kotlin.math.max
