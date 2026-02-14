@@ -114,6 +114,15 @@ case "$( uname )" in                #(
   NONSTOP* )        nonstop=true ;;
 esac
 
+# On macOS, prefer JDK 21 for running Gradle itself to avoid startup/runtime
+# incompatibilities when the shell defaults to newer JDKs.
+if "$darwin" ; then
+    JAVA_21_HOME=$( /usr/libexec/java_home -v 21 2>/dev/null || true )
+    if [ -n "$JAVA_21_HOME" ] ; then
+        JAVA_HOME=$JAVA_21_HOME
+    fi
+fi
+
 CLASSPATH="\\\"\\\""
 
 
