@@ -38,24 +38,24 @@ data class GraphConnectorCrossTokens(
 )
 
 data class GraphConnectorTokens(
-    val connectedDot: dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorDotTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorDotTokens(
+    val connectedDot: GraphConnectorDotTokens = GraphConnectorDotTokens(
         color = Color(0xFF2ECC71),
         radius = 6.dp
     ),
-    val connectingDot: dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorDotTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorDotTokens(
+    val connectingDot: GraphConnectorDotTokens = GraphConnectorDotTokens(
         color = Color(0xFFFFA726),
         radius = 6.dp
     ),
-    val notConnectedDot: dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorDotTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorDotTokens(
+    val notConnectedDot: GraphConnectorDotTokens = GraphConnectorDotTokens(
         color = Color(0xFF6C6C6C),
         radius = 6.dp
     ),
     val inset: Dp = 4.dp, // How many dp the connector is inset from the edge of the node
-    val cross: dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorCrossTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorCrossTokens()
+    val cross: GraphConnectorCrossTokens = GraphConnectorCrossTokens()
 )
 
 data class GraphTokens(
-    val node: dev.tjpal.composition.diagrams.themes.tokens.GraphNodeTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphNodeTokens(),
-    val edge: dev.tjpal.composition.diagrams.themes.tokens.GraphEdgeTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphEdgeTokens(),
-    val connector: dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GraphConnectorTokens()
+    val node: GraphNodeTokens = GraphNodeTokens(),
+    val edge: GraphEdgeTokens = GraphEdgeTokens(),
+    val connector: GraphConnectorTokens = GraphConnectorTokens()
 )

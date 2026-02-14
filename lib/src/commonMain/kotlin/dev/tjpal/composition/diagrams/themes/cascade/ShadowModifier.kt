@@ -63,9 +63,9 @@ fun Modifier.insetShapeShadow(
 
 )
 
-fun Modifier.defaultInnerInsetShapeShadow(cornerRadius: Dp = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.DefaultCornerRadius) = this.insetShapeShadow(
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.HighlightShadowColor,
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.CastShadowColor,
+fun Modifier.defaultInnerInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.insetShapeShadow(
+    HighlightShadowColor,
+    CastShadowColor,
     blurRadius = 1.0f,
     strokeSize = 2.0f,
     offsetX = 2.dp,
@@ -73,36 +73,36 @@ fun Modifier.defaultInnerInsetShapeShadow(cornerRadius: Dp = _root_ide_package_.
     shape = RoundedCornerShape(cornerRadius)
 )
 
-fun Modifier.defaultCascadeBackground(cornerRadius: Dp = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.DefaultCornerRadius) =
-    this.background(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.BackgroundColor,RoundedCornerShape(cornerRadius))
+fun Modifier.defaultCascadeBackground(cornerRadius: Dp = DefaultCornerRadius) =
+    this.background(BackgroundColor,RoundedCornerShape(cornerRadius))
 
 fun Modifier.defaultCascadeBackground(shape: Shape) =
-    this.background(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.BackgroundColor,shape)
+    this.background(BackgroundColor,shape)
 
-fun Modifier.defaultCascadeShapeShadow(cornerRadius: Dp = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.DefaultCornerRadius) = this.shapeShadow(
-    highlightShadowColor = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.HighlightShadowColor,
-    castShadowColor = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.CastShadowColor,
-    blurRadius = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.OutsetShadowBlurRadius,
-    offsetX = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.OutsetShadowOffsetX,
-    offsetY = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.OutsetShadowOffsetY,
+fun Modifier.defaultCascadeShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.shapeShadow(
+    highlightShadowColor = HighlightShadowColor,
+    castShadowColor = CastShadowColor,
+    blurRadius = OutsetShadowBlurRadius,
+    offsetX = OutsetShadowOffsetX,
+    offsetY = OutsetShadowOffsetY,
     shape = RoundedCornerShape(cornerRadius)
 )
 
 fun Modifier.defaultCascadeShapeShadow(shape: Shape) = this.shapeShadow(
-    highlightShadowColor = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.HighlightShadowColor,
-    castShadowColor = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.CastShadowColor,
-    blurRadius = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.OutsetShadowBlurRadius,
-    offsetX = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.OutsetShadowOffsetX,
-    offsetY = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.OutsetShadowOffsetY,
+    highlightShadowColor = HighlightShadowColor,
+    castShadowColor = CastShadowColor,
+    blurRadius = OutsetShadowBlurRadius,
+    offsetX = OutsetShadowOffsetX,
+    offsetY = OutsetShadowOffsetY,
     shape = shape
 )
 
-fun Modifier.defaultInsetShapeShadow(cornerRadius: Dp = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.DefaultCornerRadius) = this.shapeShadow(
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.CastShadowColor,
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.HighlightShadowColor,
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.InsetShadowBlurRadius,
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.InsetShadowPressedOffsetX,
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.InsetShadowPressedOffsetY,
+fun Modifier.defaultInsetShapeShadow(cornerRadius: Dp = DefaultCornerRadius) = this.shapeShadow(
+    CastShadowColor,
+    HighlightShadowColor,
+    InsetShadowBlurRadius,
+    InsetShadowPressedOffsetX,
+    InsetShadowPressedOffsetY,
     RoundedCornerShape(cornerRadius)
 )
 

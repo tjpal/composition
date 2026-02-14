@@ -18,7 +18,7 @@ import dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation
 @Composable
 fun FloatingBarTemplate(
     modifier: Modifier = Modifier,
-    location: dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation,
+    location: FloatingBarLocation,
     bandThickness: Dp,
     barInset: Dp,
     floatingBar: @Composable BoxScope.() -> Unit,
@@ -30,19 +30,19 @@ fun FloatingBarTemplate(
 
         // Overlay floating bar in the specified location
         var modifier = when(location) {
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.TOP, _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.BOTTOM -> Modifier
+            FloatingBarLocation.TOP, FloatingBarLocation.BOTTOM -> Modifier
                 .fillMaxWidth()
                 .height(bandThickness)
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.LEFT, _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.RIGHT -> Modifier
+            FloatingBarLocation.LEFT, FloatingBarLocation.RIGHT -> Modifier
                 .fillMaxHeight()
                 .width(bandThickness)
         }
 
         modifier = when(location) {
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.TOP -> modifier.padding(top = barInset).align(Alignment.TopCenter)
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.BOTTOM -> modifier.padding(bottom = barInset).align(Alignment.BottomCenter)
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.LEFT -> modifier.padding(start = barInset).align(Alignment.CenterStart)
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.RIGHT -> modifier.padding(end = barInset).align(Alignment.CenterEnd)
+            FloatingBarLocation.TOP -> modifier.padding(top = barInset).align(Alignment.TopCenter)
+            FloatingBarLocation.BOTTOM -> modifier.padding(bottom = barInset).align(Alignment.BottomCenter)
+            FloatingBarLocation.LEFT -> modifier.padding(start = barInset).align(Alignment.CenterStart)
+            FloatingBarLocation.RIGHT -> modifier.padding(end = barInset).align(Alignment.CenterEnd)
         }
 
         Box(modifier = modifier, contentAlignment = Alignment.Center) {

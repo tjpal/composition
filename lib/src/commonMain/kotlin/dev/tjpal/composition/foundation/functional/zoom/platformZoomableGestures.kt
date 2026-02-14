@@ -7,8 +7,8 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 
 fun Modifier.zoomableGestures(
-    state: dev.tjpal.composition.foundation.functional.zoom.ZoomableState,
-    config: dev.tjpal.composition.foundation.functional.zoom.GestureConfig = _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.GestureConfig()
+    state: ZoomableState,
+    config: GestureConfig = GestureConfig()
 ): Modifier = this.pointerInput(state, config) {
     awaitPointerEventScope {
         while (true) {

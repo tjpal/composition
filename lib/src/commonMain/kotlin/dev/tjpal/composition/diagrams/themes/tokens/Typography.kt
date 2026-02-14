@@ -8,16 +8,16 @@ data class Typography(
 )
 
 data class Typographies(
-    val primary: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(),
-    val default: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(),
-    val placeholder: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(),
-    val link: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography()
+    val primary: Typography = Typography(),
+    val default: Typography = Typography(),
+    val placeholder: Typography = Typography(),
+    val link: Typography = Typography()
 ) {
-    fun getTypography(type: dev.tjpal.composition.diagrams.themes.tokens.TextType): dev.tjpal.composition.diagrams.themes.tokens.Typography {
+    fun getTypography(type: TextType): Typography {
         return when (type) {
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY -> primary
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT -> default
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PLACEHOLDER -> placeholder
+            TextType.PRIMARY -> primary
+            TextType.DEFAULT -> default
+            TextType.PLACEHOLDER -> placeholder
         }
     }
 }

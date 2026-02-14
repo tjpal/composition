@@ -13,7 +13,7 @@ import dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
 private fun DrawScope.verticalGrid(
     canvasSize: Size,
     gridStepsX: Int,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+    tokens: ScatterTokens
 ) {
     for (i in 0..gridStepsX) {
         val x = (i.toFloat() / gridStepsX) * canvasSize.width
@@ -30,7 +30,7 @@ private fun DrawScope.verticalGrid(
 private fun DrawScope.horizontalGrid(
     canvasSize: Size,
     gridStepsY: Int,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+    tokens: ScatterTokens
 ) {
     for (i in 0..gridStepsY) {
         val y = (i.toFloat() / gridStepsY) * canvasSize.height
@@ -47,7 +47,7 @@ private fun DrawScope.horizontalGrid(
 private fun DrawScope.xAxis(
     canvasSize: Size,
     range: DiagramRange,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+    tokens: ScatterTokens
 ) {
     val zeroYInRange = range.minY <= 0f && range.maxY >= 0f
 
@@ -68,7 +68,7 @@ private fun DrawScope.xAxis(
 private fun DrawScope.yAxis(
     canvasSize: Size,
     range: DiagramRange,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+    tokens: ScatterTokens
 ) {
     val zeroXInRange = range.minX <= 0f && range.maxX >= 0f
 
@@ -92,7 +92,7 @@ internal fun ScatterGridAndAxesCanvas(
     range: DiagramRange,
     gridStepsX: Int,
     gridStepsY: Int,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+    tokens: ScatterTokens
 ) {
     Canvas(modifier = modifier) {
         val canvasSize = this.size

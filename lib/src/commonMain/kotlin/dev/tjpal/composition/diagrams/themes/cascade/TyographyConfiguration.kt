@@ -9,9 +9,9 @@ import androidx.compose.ui.unit.sp
 import dev.tjpal.composition.diagrams.themes.tokens.Typographies
 import dev.tjpal.composition.diagrams.themes.tokens.Typography
 
-fun typographyConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.Typographies {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typographies(
-        primary = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(
+fun typographyConfiguration(): Typographies {
+    return Typographies(
+        primary = Typography(
             style = TextStyle(
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
@@ -22,7 +22,7 @@ fun typographyConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.Typo
                 color = Color(102, 116, 141, 255)
             )
         ),
-        default = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(
+        default = Typography(
             style = TextStyle(
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Normal,
@@ -33,7 +33,7 @@ fun typographyConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.Typo
                 color = Color(102, 116, 141, 255)
             )
         ),
-        placeholder = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(
+        placeholder = Typography(
             style = TextStyle(
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Normal,
@@ -44,7 +44,7 @@ fun typographyConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.Typo
                 color = Color(198, 206, 220, 255)
             )
         ),
-        link = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(
+        link = Typography(
             style = TextStyle(
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.SemiBold,

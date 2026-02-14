@@ -22,7 +22,7 @@ fun LineGrid(
     area: Rect,
     content: @Composable () -> Unit
 ) {
-    val gridLineTheme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.grid.line
+    val gridLineTheme = Theme.current.grid.line
     val strokeDp: Dp = gridLineTheme.strokeWidth
     val drawColor = gridLineTheme.color
     val drawAlpha = gridLineTheme.alpha

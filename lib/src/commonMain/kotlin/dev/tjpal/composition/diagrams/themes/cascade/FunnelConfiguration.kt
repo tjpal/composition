@@ -8,9 +8,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens
 
-fun createFunnelConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens(
-        background = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.BackgroundColor,
+fun createFunnelConfiguration(): FunnelTokens {
+    return FunnelTokens(
+        background = BackgroundColor,
         stageSeparatorColor = Color(102, 116, 141, 255),
         stageSeparatorStrokeWidth = 2.dp,
         innerSeparatorColor = Color(198, 206, 220, 255),

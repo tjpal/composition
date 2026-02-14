@@ -33,8 +33,8 @@ fun Table(
             TableHeader(columnDescriptions)
         }
         item {
-            _root_ide_package_.dev.tjpal.composition.foundation.spacing.HorizontalDivider(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerType.SECONDARY)
-            Spacer(modifier = Modifier.height(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.table.contentVerticalPadding))
+            HorizontalDivider(type = DividerType.SECONDARY)
+            Spacer(modifier = Modifier.height(Theme.current.table.contentVerticalPadding))
         }
         items(rowCount) { rowIndex ->
             TableRow(columnDescriptions, rowIndex, cellContent)
@@ -54,17 +54,17 @@ fun Table(
             TableHeader(columnDescriptions)
         }
         item {
-            _root_ide_package_.dev.tjpal.composition.foundation.spacing.HorizontalDivider(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerType.SECONDARY)
-            Spacer(modifier = Modifier.height(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.table.contentVerticalPadding))
+            HorizontalDivider(type = DividerType.SECONDARY)
+            Spacer(modifier = Modifier.height(Theme.current.table.contentVerticalPadding))
         }
         groupDescriptions.forEachIndexed { groupIndex, group ->
             item {
-                Spacer(modifier = Modifier.height(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.table.groupVerticalPadding))
-                _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                Spacer(modifier = Modifier.height(Theme.current.table.groupVerticalPadding))
+                Text(
                     group.name,
-                    type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY
+                    type = TextType.PRIMARY
                 )
-                Spacer(modifier = Modifier.height(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.table.groupVerticalPadding))
+                Spacer(modifier = Modifier.height(Theme.current.table.groupVerticalPadding))
             }
             items(group.rowCount) { rowIndex ->
                 TableRow(columnDescriptions, rowIndex) @Composable { row, column ->
@@ -79,12 +79,12 @@ fun Table(
 fun TableHeader(columnDescriptions: List<TableColum>) {
     Row() {
         columnDescriptions.forEach { description ->
-            _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+            Text(
                 description.name,
-                type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY,
+                type = TextType.PRIMARY,
                 modifier = Modifier.fillMaxWidth().weight(description.weight).padding(
                     0.dp,
-                    _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.table.headerVerticalPadding
+                    Theme.current.table.headerVerticalPadding
                 )
             )
         }
@@ -99,7 +99,7 @@ fun TableRow(
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         columnDescriptions.forEachIndexed { columnIndex, data ->
-            Box(modifier = Modifier.fillMaxWidth().weight(data.weight).padding(0.dp, _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.table.contentVerticalPadding)) {
+            Box(modifier = Modifier.fillMaxWidth().weight(data.weight).padding(0.dp, Theme.current.table.contentVerticalPadding)) {
                 cellContent(rowIndex, columnIndex)
             }
         }

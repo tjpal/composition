@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 
 data class InputFieldTokens(
     val modifier: Modifier = Modifier,
-    val typography: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(),
+    val typography: Typography = Typography(),
     val contentPadding: PaddingValues = PaddingValues(8.dp),
     val rowHeightFallback: Dp = 20.dp
 )

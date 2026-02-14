@@ -18,7 +18,7 @@ internal fun <T> ScatterPointsOverlay(
     entries: List<ScatterEntry<T>>,
     range: DiagramRange,
     containerSize: Size,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens,
+    tokens: ScatterTokens,
     onPointClick: (ScatterEntry<T>) -> Unit,
     onHoverChange: (String?) -> Unit
 ) {

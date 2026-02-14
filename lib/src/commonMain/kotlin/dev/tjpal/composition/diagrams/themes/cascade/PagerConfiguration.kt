@@ -6,12 +6,12 @@ import dev.tjpal.composition.diagrams.themes.tokens.PagerTokens
 import dev.tjpal.composition.diagrams.themes.tokens.TextType
 import dev.tjpal.composition.diagrams.themes.tokens.Typographies
 
-fun pagerConfiguration(typographies: dev.tjpal.composition.diagrams.themes.tokens.Typographies): dev.tjpal.composition.diagrams.themes.tokens.PagerTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.PagerTokens(
+fun pagerConfiguration(typographies: Typographies): PagerTokens {
+    return PagerTokens(
         selectionBarHeight = 16.dp,
         selectorSpacing = 4.dp,
         contentPadding = PaddingValues(8.dp),
-        selectedPageTypography = typographies.getTypography(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY),
-        unselectedPageTypography = typographies.getTypography(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT)
+        selectedPageTypography = typographies.getTypography(TextType.PRIMARY),
+        unselectedPageTypography = typographies.getTypography(TextType.DEFAULT)
     )
 }

@@ -9,14 +9,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import dev.tjpal.composition.diagrams.themes.cascade.defaultInnerInsetShapeShadow
 import dev.tjpal.composition.diagrams.themes.tokens.TextType
 
-fun inputConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.InputFieldTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.InputFieldTokens(
-        modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.background(
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.BackgroundColor,
+fun inputConfiguration(): InputFieldTokens {
+    return InputFieldTokens(
+        modifier = Modifier.Companion.background(
+            BackgroundColor,
             shape = RoundedCornerShape(6.dp)
         ).defaultInnerInsetShapeShadow(6.dp),
-        typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.typographyConfiguration()
-            .getTypography(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT),
+        typography = typographyConfiguration()
+            .getTypography(TextType.DEFAULT),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
         rowHeightFallback = 18.dp
     )

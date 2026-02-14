@@ -9,9 +9,9 @@ import dev.tjpal.composition.diagrams.themes.cascade.defaultCascadeBackground
 import dev.tjpal.composition.diagrams.themes.cascade.defaultCascadeShapeShadow
 import dev.tjpal.composition.diagrams.themes.tokens.FloatingBarTokens
 
-fun createFloatingBarConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.FloatingBarTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarTokens(
-        modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion
+fun createFloatingBarConfiguration(): FloatingBarTokens {
+    return FloatingBarTokens(
+        modifier = Modifier.Companion
             .defaultCascadeShapeShadow()
             .defaultCascadeBackground()
             .clip(RoundedCornerShape(10.dp)),

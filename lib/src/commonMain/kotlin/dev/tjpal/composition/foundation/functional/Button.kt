@@ -21,19 +21,19 @@ import dev.tjpal.composition.diagrams.themes.tokens.Theme
 fun Button(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    type: dev.tjpal.composition.diagrams.themes.tokens.ButtonType = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.DEFAULT,
+    type: ButtonType = ButtonType.DEFAULT,
     content: @Composable () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     var isHovered by remember { mutableStateOf(false) }
 
-    val buttonTheme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.button.getButtonTheme(type)
+    val buttonTheme = Theme.current.button.getButtonTheme(type)
 
     // Shy buttons do not render any border until hovered. They are used to reduce visual noise when other
     // separating visual elements are sufficient.
     val buttonModifier = when (type) {
-        _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.SHY -> {
+        ButtonType.SHY -> {
             when {
                 isPressed -> buttonTheme.pressed.modifier
                 isHovered -> buttonTheme.default.modifier

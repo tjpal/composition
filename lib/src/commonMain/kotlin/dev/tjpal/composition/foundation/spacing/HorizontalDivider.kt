@@ -13,7 +13,7 @@ import dev.tjpal.composition.diagrams.themes.tokens.Theme
 
 @Composable
 fun HorizontalDivider(
-    type: dev.tjpal.composition.diagrams.themes.tokens.DividerType = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerType.SECONDARY,
+    type: DividerType = DividerType.SECONDARY,
     horizontalPadding: Dp = 6.dp,
     verticalPadding: Dp = 6.dp,
     thickness: Dp = 1.dp
@@ -23,6 +23,6 @@ fun HorizontalDivider(
             .padding(start = horizontalPadding, end = horizontalPadding, top = verticalPadding, bottom = verticalPadding)
             .fillMaxWidth()
             .height(thickness)
-            .then(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.divider.getTheme(type).modifier)
+            .then(Theme.current.divider.getTheme(type).modifier)
     )
 }

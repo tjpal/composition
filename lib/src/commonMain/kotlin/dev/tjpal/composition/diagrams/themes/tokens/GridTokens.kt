@@ -26,6 +26,6 @@ data class GridLineTokens(
 
 @Immutable
 data class GridTokens(
-    val point: dev.tjpal.composition.diagrams.themes.tokens.GridPointTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GridPointTokens(),
-    val line: dev.tjpal.composition.diagrams.themes.tokens.GridLineTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.GridLineTokens()
+    val point: GridPointTokens = GridPointTokens(),
+    val line: GridLineTokens = GridLineTokens()
 )

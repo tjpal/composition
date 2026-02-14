@@ -21,7 +21,7 @@ fun FunnelDiagram(
     items: List<FunnelItem>,
     onItemClick: (FunnelItem) -> Unit = {}
 ) {
-    val tokens = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.funnel
+    val tokens = Theme.current.funnel
 
     BoxWithConstraints(modifier = modifier.background(tokens.background)) {
         var containerSize = Size(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat())

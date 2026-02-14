@@ -8,14 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-fun createDividerConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.DividerTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerTokens(
-        primary = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerTheme(
+fun createDividerConfiguration(): DividerTokens {
+    return DividerTokens(
+        primary = DividerTheme(
             modifier = Modifier
                 .height(1.dp)
                 .background(Color(150, 150, 150, 255))
         ),
-        secondary = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerTheme(
+        secondary = DividerTheme(
             modifier = Modifier
                 .height(1.dp)
                 .background(Color(220, 220, 220, 255))

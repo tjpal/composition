@@ -15,7 +15,7 @@ fun CardTwoSlots(
     contentSlot: @Composable () -> Unit,
     onClick: () -> Unit = {}
 ) {
-    val theme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.card
+    val theme = Theme.current.card
     val padding = theme.basicConfiguration.fundamentalPadding
 
     FullCardFrame(

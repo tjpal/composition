@@ -34,7 +34,7 @@ fun Input(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
-    val tokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.inputField
+    val tokens = Theme.current.inputField
     val typography = tokens.typography
     val contentPadding = tokens.contentPadding
 
@@ -71,9 +71,9 @@ fun Input(
         ) { innerTextField ->
             // Show the placeholder only when there is no text and the field is not focused.
             if (effectiveValue.isEmpty() && !placeholder.isNullOrEmpty() && !isFocused) {
-                _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                Text(
                     text = placeholder,
-                    type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PLACEHOLDER
+                    type = TextType.PLACEHOLDER
                 )
             }
             innerTextField()

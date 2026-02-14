@@ -39,6 +39,10 @@ import dev.tjpal.composition.diagrams.themes.cascade.defaultCascadeShapeShadow
 import dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode
 import kotlin.math.abs
 import kotlin.math.hypot
+import dev.tjpal.composition.diagrams.themes.cascade.DefaultNodeContentPadding
+import dev.tjpal.composition.diagrams.themes.tokens.GraphNodeTokens
+import dev.tjpal.composition.diagrams.themes.tokens.NodeShape
+import dev.tjpal.composition.diagrams.themes.tokens.Theme
 
 enum class EdgeSide {
     TOP, BOTTOM, LEFT, RIGHT
@@ -89,7 +93,7 @@ data class NodeSpec(
     val heightMultiplier: Int = 4,
     val connectors: List<Connector> = emptyList(),
     val associatedData: Any? = null,
-    val shape: dev.tjpal.composition.diagrams.themes.tokens.NodeShape = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.RECTANGLE,
+    val shape: NodeShape = NodeShape.RECTANGLE,
     val onTap: ((id: String) -> Unit) = {},
     val content: @Composable (id: String) -> Unit
 )
@@ -115,26 +119,26 @@ fun GraphEditor(
     edges: List<EdgeSpec>,
     gridSpacing: Dp,
     gridExtension: Float,
-    initialScaleMode: dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode = _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode.DEFAULT,
+    initialScaleMode: InitialScaleMode = InitialScaleMode.DEFAULT,
     onConnect: (fromNodeId: String, fromConnectorId: String, toNodeId: String, toConnectorId: String) -> Unit = { _, _, _, _ -> },
     onDisconnect: (nodeId: String, connectorId: String) -> Unit = { _, _ -> },
     onNodeDragFinished: (movedNode: NodeSpec, finalPosition: Offset) -> Unit = { _, _ -> },
     onNodeTapped: (node: NodeSpec) -> Unit = {}
 ) {
-    val theme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current
+    val theme = Theme.current
     val density = LocalDensity.current
 
     // connecting state and pointer position used to render a temporary edge while connecting
     val selectedConnectorState = remember { mutableStateOf<SelectedConnector?>(null) }
     val currentPointerState = remember { mutableStateOf(Offset.Zero) }
 
-    _root_ide_package_.dev.tjpal.composition.foundation.functional.ZoomableBox(
+    ZoomableBox(
         modifier = modifier.fillMaxSize(),
         initialScaleMode = initialScaleMode
     ) {
         val gridRect = Rect(0f, 0f, gridExtension, gridExtension)
 
-        _root_ide_package_.dev.tjpal.composition.foundation.spacing.LineGrid(spacing = gridSpacing, area = gridRect) {
+        LineGrid(spacing = gridSpacing, area = gridRect) {
             Canvas(Modifier.fillMaxSize().pointerInput(nodes, edges) {
                 handleGraphPointerInput(
                     currentPointerState = currentPointerState,
@@ -490,7 +494,7 @@ private fun Node(
     onNodeTapped: (node: NodeSpec) -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val theme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current
+    val theme = Theme.current
 
     val (sizeWidth, sizeHeight) = getNodeSize(width, height, nodeSpec)
     val nodeShape = getNodeShape(nodeSpec, theme.graph.node)
@@ -498,7 +502,7 @@ private fun Node(
     val shapeModifier = Modifier
         .defaultCascadeShapeShadow(nodeShape)
         .defaultCascadeBackground(nodeShape)
-        .padding(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.DefaultNodeContentPadding)
+        .padding(DefaultNodeContentPadding)
 
     Box(
         modifier = Modifier
@@ -575,27 +579,27 @@ private fun Node(
     }
 }
 
-private fun getNodeShape(nodeSpec: NodeSpec, nodeTokens: dev.tjpal.composition.diagrams.themes.tokens.GraphNodeTokens): RoundedCornerShape {
+private fun getNodeShape(nodeSpec: NodeSpec, nodeTokens: GraphNodeTokens): RoundedCornerShape {
     return when (nodeSpec.shape) {
-        _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.RECTANGLE -> RoundedCornerShape(0.dp)
-        _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.LEFT_ROUNDED -> RoundedCornerShape(
+        NodeShape.RECTANGLE -> RoundedCornerShape(0.dp)
+        NodeShape.LEFT_ROUNDED -> RoundedCornerShape(
             topStart = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
             bottomStart = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
             topEnd = 0.dp,
             bottomEnd = 0.dp
         )
-        _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.RIGHT_ROUNDED -> RoundedCornerShape(
+        NodeShape.RIGHT_ROUNDED -> RoundedCornerShape(
             topStart = 0.dp,
             bottomStart = 0.dp,
             topEnd = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
             bottomEnd = nodeTokens.leftCornerBaseRadius * nodeSpec.heightMultiplier,
         )
-        _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.CIRCLE -> CircleShape
+        NodeShape.CIRCLE -> CircleShape
     }
 }
 
 private fun getNodeSize(width: Dp, height: Dp, nodeSpec: NodeSpec): Pair<Dp, Dp> {
-    return if (nodeSpec.shape == _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.CIRCLE) {
+    return if (nodeSpec.shape == NodeShape.CIRCLE) {
         val minDp = if (width < height) width else height
         Pair(minDp, minDp)
     } else {

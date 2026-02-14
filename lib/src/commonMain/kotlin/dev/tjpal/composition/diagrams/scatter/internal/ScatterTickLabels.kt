@@ -38,7 +38,7 @@ internal fun ScatterTickLabels(
     ticksX.forEach { value ->
         val position = mapToPixel(range, containerSize, 0f, 0f, value, range.minY)
 
-        dev.tjpal.composition.foundation.text.Text(
+        Text(
             text = formatTick(value),
             type = TextType.DEFAULT,
             modifier = Modifier.offset(
@@ -51,7 +51,7 @@ internal fun ScatterTickLabels(
     ticksY.forEach { value ->
         val position = mapToPixel(range, containerSize, 0f, 0f, range.minX, value)
 
-        dev.tjpal.composition.foundation.text.Text(
+        Text(
             text = formatTick(value),
             type = TextType.DEFAULT,
             modifier = Modifier.offset(

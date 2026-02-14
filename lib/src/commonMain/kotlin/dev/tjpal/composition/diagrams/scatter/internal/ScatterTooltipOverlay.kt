@@ -18,7 +18,7 @@ internal fun <T> ScatterTooltipOverlay(
     highlighted: ScatterEntry<T>,
     range: DiagramRange,
     containerSize: Size,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+    tokens: ScatterTokens
 ) {
     if (containerSize.width <= 0f || containerSize.height <= 0f) {
         return
@@ -34,7 +34,7 @@ internal fun <T> ScatterTooltipOverlay(
         Box(
             modifier = tokens.tooltipShapeModifier
         ) {
-            dev.tjpal.composition.foundation.text.Text(
+            Text(
                 text = highlighted.label ?: "-",
                 type = TextType.DEFAULT
             )

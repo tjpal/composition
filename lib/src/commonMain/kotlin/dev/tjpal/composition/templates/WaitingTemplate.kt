@@ -21,20 +21,20 @@ fun WaitingTemplate(
     modifier: Modifier = Modifier,
     text: String,
 ) {
-    val tokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.waiting
+    val tokens = Theme.current.waiting
     val waitingSize = tokens.size
     val gap = tokens.waitingTemplateElementGap
 
     Box(modifier = modifier.fillMaxSize().then(modifier)) {
-        _root_ide_package_.dev.tjpal.composition.foundation.functional.WaitingCircle(
+        WaitingCircle(
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = -(waitingSize / 2) - (gap / 2))
         )
 
-        _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+        Text(
             text = text,
-            type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY,
+            type = TextType.PRIMARY,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = (waitingSize / 2) + (gap / 2))

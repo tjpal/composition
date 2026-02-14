@@ -21,7 +21,7 @@ fun PointGrid(
     area: Rect,
     content: @Composable () -> Unit
 ) {
-    val pointGridTheme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.grid.point
+    val pointGridTheme = Theme.current.grid.point
     val radiusDp = pointGridTheme.dotRadius
     val drawColor = pointGridTheme.color
     val drawAlpha = pointGridTheme.alpha

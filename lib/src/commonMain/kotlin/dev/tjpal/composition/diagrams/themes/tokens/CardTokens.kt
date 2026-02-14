@@ -15,6 +15,6 @@ data class CardHeaderConfiguration(
 )
 
 data class CardTokens(
-    val basicConfiguration: dev.tjpal.composition.diagrams.themes.tokens.CardBasicConfiguration = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.CardBasicConfiguration(),
-    val headerConfiguration: dev.tjpal.composition.diagrams.themes.tokens.CardHeaderConfiguration = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.CardHeaderConfiguration()
+    val basicConfiguration: CardBasicConfiguration = CardBasicConfiguration(),
+    val headerConfiguration: CardHeaderConfiguration = CardHeaderConfiguration()
 )

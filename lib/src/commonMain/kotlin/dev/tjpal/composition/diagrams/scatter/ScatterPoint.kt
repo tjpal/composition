@@ -20,7 +20,7 @@ import dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
 @Composable
 fun <T> ScatterPoint(
     entry: ScatterEntry<T>,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens,
+    tokens: ScatterTokens,
     onClick: (ScatterEntry<T>) -> Unit = {},
     onHoverChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier

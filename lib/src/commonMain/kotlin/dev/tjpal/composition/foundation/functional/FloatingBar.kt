@@ -30,17 +30,17 @@ import dev.tjpal.composition.diagrams.themes.tokens.Theme
 @DslMarker
 annotation class FloatingBarDsl
 
-@dev.tjpal.composition.foundation.functional.FloatingBarDsl
+@FloatingBarDsl
 class FloatingBarBuilder {
-    internal val groups = mutableListOf<dev.tjpal.composition.foundation.functional.GroupBuilder>()
+    internal val groups = mutableListOf<GroupBuilder>()
 
-    fun group(block: dev.tjpal.composition.foundation.functional.GroupBuilder.() -> Unit) {
-        val gb = _root_ide_package_.dev.tjpal.composition.foundation.functional.GroupBuilder().apply(block)
+    fun group(block: GroupBuilder.() -> Unit) {
+        val gb = GroupBuilder().apply(block)
         groups += gb
     }
 }
 
-@dev.tjpal.composition.foundation.functional.FloatingBarDsl
+@FloatingBarDsl
 class GroupBuilder {
     internal val items = mutableListOf<@Composable () -> Unit>()
 
@@ -53,21 +53,21 @@ class GroupBuilder {
 fun FloatingBar(
     modifier: Modifier = Modifier,
     buttonExtent: Dp,
-    orientation: dev.tjpal.composition.diagrams.themes.tokens.FloatingBarOrientation = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarOrientation.HORIZONTAL,
-    content: dev.tjpal.composition.foundation.functional.FloatingBarBuilder.() -> Unit
+    orientation: FloatingBarOrientation = FloatingBarOrientation.HORIZONTAL,
+    content: FloatingBarBuilder.() -> Unit
 ) {
-    val builder = _root_ide_package_.dev.tjpal.composition.foundation.functional.FloatingBarBuilder().apply(content)
+    val builder = FloatingBarBuilder().apply(content)
     val groups = builder.groups.map { it.items.toList() }
 
     if(groups.isEmpty()) {
         return
     }
 
-    val tokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.floatingBar
+    val tokens = Theme.current.floatingBar
     val totalButtons = groups.sumOf { it.size }
     val separators = (groups.size - 1).coerceAtLeast(0)
 
-    if (orientation == _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarOrientation.HORIZONTAL) {
+    if (orientation == FloatingBarOrientation.HORIZONTAL) {
         // total width = buttons + separator spacing + separator thickness
         val totalWidth: Dp = buttonExtent * totalButtons + (tokens.dividerHorizontalPadding * 2 * separators) + (tokens.dividerThickness * separators)
 
@@ -89,8 +89,8 @@ fun FloatingBar(
 
                 // insert vertical divider between groups
                 if (groupIndex != groups.lastIndex) {
-                    _root_ide_package_.dev.tjpal.composition.foundation.spacing.VerticalDivider(
-                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerType.PRIMARY,
+                    VerticalDivider(
+                        type = DividerType.PRIMARY,
                         horizontalPadding = tokens.dividerHorizontalPadding,
                         verticalPadding = tokens.dividerVerticalPadding,
                         thickness = tokens.dividerThickness
@@ -98,7 +98,7 @@ fun FloatingBar(
                 }
             }
         }
-    } else if(orientation == _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarOrientation.VERTICAL) {
+    } else if(orientation == FloatingBarOrientation.VERTICAL) {
         // total height = buttons + separator spacing + separator thickness
         val totalHeight: Dp = buttonExtent * totalButtons + (tokens.dividerVerticalPadding * 2 * separators) + (tokens.dividerThickness * separators)
 
@@ -120,8 +120,8 @@ fun FloatingBar(
 
                 // insert horizontal divider between groups
                 if (groupIndex != groups.lastIndex) {
-                    _root_ide_package_.dev.tjpal.composition.foundation.spacing.HorizontalDivider(
-                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.DividerType.SECONDARY,
+                    HorizontalDivider(
+                        type = DividerType.SECONDARY,
                         horizontalPadding = tokens.dividerHorizontalPadding,
                         verticalPadding = tokens.dividerVerticalPadding,
                         thickness = tokens.dividerThickness

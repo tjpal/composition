@@ -15,50 +15,50 @@ import dev.tjpal.composition.diagrams.themes.tokens.ButtonTokens
 private val ButtonPadding = PaddingValues(24.dp, 10.dp, 24.dp, 10.dp)
 private val IconButtonSize = 48.dp
 
-fun buttonConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.ButtonTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonTokens(
-        primaryButton = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens(
-            default = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
+fun buttonConfiguration(): ButtonTokens {
+    return ButtonTokens(
+        primaryButton = ButtonCategoryTokens(
+            default = ButtonStateTokens(
                 modifier = Modifier.Companion.defaultCascadeShapeShadow().defaultCascadeBackground()
-                    .padding(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.ButtonPadding)
+                    .padding(ButtonPadding)
             ),
-            pressed = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
+            pressed = ButtonStateTokens(
                 modifier = Modifier.Companion.defaultInsetShapeShadow().defaultCascadeBackground()
-                    .padding(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.ButtonPadding)
+                    .padding(ButtonPadding)
             )
         ),
         // A shy button uses flat design with no shadow until the cursor is moved over it. The goal is to reduce visual noise.
-        shyButton = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens(
-            flat = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
-                modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.defaultCascadeBackground()
-                    .padding(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.ButtonPadding)
+        shyButton = ButtonCategoryTokens(
+            flat = ButtonStateTokens(
+                modifier = Modifier.Companion.defaultCascadeBackground()
+                    .padding(ButtonPadding)
             ),
-            default = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
-                modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.defaultCascadeShapeShadow()
+            default = ButtonStateTokens(
+                modifier = Modifier.Companion.defaultCascadeShapeShadow()
                     .defaultCascadeBackground()
-                    .padding(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.ButtonPadding)
+                    .padding(ButtonPadding)
             ),
-            pressed = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
-                modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.defaultInsetShapeShadow()
+            pressed = ButtonStateTokens(
+                modifier = Modifier.Companion.defaultInsetShapeShadow()
                     .defaultCascadeBackground()
-                    .padding(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.ButtonPadding)
+                    .padding(ButtonPadding)
             )
         ),
         // Icon buttons are visually compact and provide a small visual size.
-        iconButton = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens(
-            flat = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
-                modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.defaultCascadeBackground()
-                    .size(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.IconButtonSize)
+        iconButton = ButtonCategoryTokens(
+            flat = ButtonStateTokens(
+                modifier = Modifier.Companion.defaultCascadeBackground()
+                    .size(IconButtonSize)
             ),
-            default = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
-                modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.defaultCascadeShapeShadow()
+            default = ButtonStateTokens(
+                modifier = Modifier.Companion.defaultCascadeShapeShadow()
                     .defaultCascadeBackground()
-                    .size(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.IconButtonSize)
+                    .size(IconButtonSize)
             ),
-            pressed = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(
-                modifier = _root_ide_package_.androidx.compose.ui.Modifier.Companion.defaultInsetShapeShadow()
+            pressed = ButtonStateTokens(
+                modifier = Modifier.Companion.defaultInsetShapeShadow()
                     .defaultCascadeBackground()
-                    .size(_root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.IconButtonSize)
+                    .size(IconButtonSize)
             )
         )
     )

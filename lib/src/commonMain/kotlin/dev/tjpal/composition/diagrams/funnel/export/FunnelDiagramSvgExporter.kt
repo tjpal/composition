@@ -13,7 +13,7 @@ fun exportFunnelDiagramToSvg(
     subStagesPerStage: Int,
     categories: Int,
     containerSize: Size,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens,
+    tokens: FunnelTokens,
     tooltipProvider: (FunnelItem) -> String? = { it.label },
     linkProvider: (FunnelItem) -> String? = { null }
 ): String {

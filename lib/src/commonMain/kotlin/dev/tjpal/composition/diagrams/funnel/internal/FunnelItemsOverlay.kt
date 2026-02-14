@@ -40,7 +40,7 @@ internal fun FunnelItemsOverlay(
     subStagesPerStage: Int,
     categories: Int,
     containerSize: Size,
-    tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens,
+    tokens: FunnelTokens,
     onItemClick: (FunnelItem) -> Unit
 ) {
     val density = LocalDensity.current
@@ -139,7 +139,7 @@ internal fun FunnelItemsOverlay(
                         }
                         .then(tokens.tooltipShapeModifier)
                 ) {
-                    dev.tjpal.composition.foundation.text.Text(label)
+                    Text(label)
                 }
             }
         }

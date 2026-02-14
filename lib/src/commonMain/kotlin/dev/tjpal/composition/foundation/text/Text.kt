@@ -12,16 +12,16 @@ import dev.tjpal.composition.diagrams.themes.tokens.Typography
 @Composable
 fun Text(
     text: String,
-    type: dev.tjpal.composition.diagrams.themes.tokens.TextType = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT,
+    type: TextType = TextType.DEFAULT,
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     onTextLayout: (TextLayoutResult) -> Unit = {}
 ) {
-    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+    Text(
         text = text,
-        typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.typography.getTypography(
+        typography = Theme.current.typography.getTypography(
             type
         ),
         modifier = modifier,
@@ -35,7 +35,7 @@ fun Text(
 @Composable
 fun Text(
     text: String,
-    typography: dev.tjpal.composition.diagrams.themes.tokens.Typography,
+    typography: Typography,
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,

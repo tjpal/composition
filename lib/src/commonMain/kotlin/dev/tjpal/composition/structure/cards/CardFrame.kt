@@ -19,7 +19,7 @@ fun VerticalHalfFrame(modifier: Modifier = Modifier, content: @Composable () -> 
 
 @Composable
 fun CardFrame(modifier: Modifier = Modifier, scaleWidth: Float, scaleHeight: Float, content: @Composable () -> Unit) {
-    val theme = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.card
+    val theme = Theme.current.card
     Box(
         modifier = Modifier.
             width(theme.basicConfiguration.cardTileSize * scaleWidth).

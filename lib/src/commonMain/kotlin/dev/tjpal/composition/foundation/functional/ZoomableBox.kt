@@ -18,8 +18,8 @@ import kotlin.math.min
 @Composable
 fun ZoomableBox(
     modifier: Modifier = Modifier,
-    state: dev.tjpal.composition.foundation.functional.zoom.ZoomableState = _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.rememberZoomableState(),
-    initialScaleMode: dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode = _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode.DEFAULT,
+    state: ZoomableState = rememberZoomableState(),
+    initialScaleMode: InitialScaleMode = InitialScaleMode.DEFAULT,
     constraintMeasurementScale: Int = 10,
     content: @Composable () -> Unit
 ) {
@@ -27,7 +27,7 @@ fun ZoomableBox(
     var measuredContentSize by remember { mutableStateOf(IntSize.Zero) }
     var fitScaleSet by remember { mutableStateOf(false) }
 
-    if(initialScaleMode == _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode.FIT && !fitScaleSet) {
+    if(initialScaleMode == InitialScaleMode.FIT && !fitScaleSet) {
         if (measuredContentSize.width > 0 && measuredContentSize.height > 0 && containerSize.width > 0 && containerSize.height > 0) {
             val sx = containerSize.width.toFloat() / measuredContentSize.width.toFloat()
             val sy = containerSize.height.toFloat() / measuredContentSize.height.toFloat()
@@ -37,7 +37,7 @@ fun ZoomableBox(
         }
     }
 
-    SubcomposeLayout(modifier = modifier.clipToBounds().then(_root_ide_package_.androidx.compose.ui.Modifier.Companion.zoomableGestures(state))) { constraints ->
+    SubcomposeLayout(modifier = modifier.clipToBounds().then(Modifier.Companion.zoomableGestures(state))) { constraints ->
         val containerWidth = constraints.maxWidth
         val containerHeight = constraints.maxHeight
         containerSize = IntSize(containerWidth, containerHeight)

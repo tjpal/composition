@@ -26,7 +26,7 @@ fun <T> ScatterDiagram(
     onPointClick: (ScatterEntry<T>) -> Unit = {},
     onPointHover: (ScatterEntry<T>?) -> Unit = {}
 ) {
-    val tokens = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.scatter
+    val tokens = Theme.current.scatter
 
     BoxWithConstraints(modifier = modifier.background(tokens.background).fillMaxSize()) {
         var containerSize = Size(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat())

@@ -15,9 +15,9 @@ fun Link(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
-    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+    Text(
         text,
-        _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.typography.link,
+        Theme.current.typography.link,
         modifier = Modifier.clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
             .then(modifier)
     )

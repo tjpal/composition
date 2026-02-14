@@ -47,7 +47,7 @@ data class DefaultHeatmapHeader(
 
 @Composable
 fun DefaultRowTitleRenderer(row: HeatmapRow) {
-    dev.tjpal.composition.foundation.text.Text(row.name, type = TextType.DEFAULT)
+    Text(row.name, type = TextType.DEFAULT)
 }
 
 @Composable
@@ -75,13 +75,13 @@ data class HeatmapConfig(
 
 @Composable
 fun HeatmapHeader(headers: List<HeatmapHeader>, config: HeatmapConfig) {
-    val theme = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.heatmap
+    val theme = Theme.current.heatmap
 
     Row(modifier = Modifier.fillMaxWidth().padding(theme.cellPadding)) {
         Spacer(modifier = Modifier.width(config.rowTextWidth))
 
         headers.forEach { header ->
-            dev.tjpal.composition.foundation.text.Text(
+            Text(
                 text = header.title,
                 type = TextType.DEFAULT,
                 modifier = Modifier.size(theme.cellSize)
@@ -92,14 +92,14 @@ fun HeatmapHeader(headers: List<HeatmapHeader>, config: HeatmapConfig) {
 
 @Composable
 fun HeatmapBody(rows: List<HeatmapRow>, config: HeatmapConfig) {
-    val theme = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.heatmap
+    val theme = Theme.current.heatmap
 
     rows.forEach { row ->
         Row(modifier = Modifier.fillMaxWidth().padding(theme.cellPadding)) {
 
             when(row) {
                 is HeatmapDividerRow -> {
-                    dev.tjpal.composition.foundation.spacing.HorizontalDivider()
+                    HorizontalDivider()
                 }
                 else -> {
                     Box(modifier = Modifier.width(config.rowTextWidth)) {
@@ -123,12 +123,12 @@ fun Heatmap(
     config: HeatmapConfig = HeatmapConfig(),
     modifier: Modifier = Modifier,
 ) {
-    val theme = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.heatmap
+    val theme = Theme.current.heatmap
 
     Box(modifier = modifier) {
         Column(modifier = Modifier.width(config.rowTextWidth + (theme.cellSize + theme.cellPadding) * headerTexts.size  - theme.cellPadding)) {
             HeatmapHeader(headerTexts, config)
-            dev.tjpal.composition.foundation.spacing.HorizontalDivider()
+            HorizontalDivider()
             Spacer(modifier = Modifier.height(theme.cellPadding))
             HeatmapBody(rows, config)
         }

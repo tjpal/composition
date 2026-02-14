@@ -8,14 +8,14 @@ import dev.tjpal.composition.diagrams.themes.tokens.CardBasicConfiguration
 import dev.tjpal.composition.diagrams.themes.tokens.CardHeaderConfiguration
 import dev.tjpal.composition.diagrams.themes.tokens.CardTokens
 
-fun createCardConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.CardTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.CardTokens(
-        basicConfiguration = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.CardBasicConfiguration(
+fun createCardConfiguration(): CardTokens {
+    return CardTokens(
+        basicConfiguration = CardBasicConfiguration(
             modifier = Modifier.Companion.defaultCascadeShapeShadow().defaultCascadeBackground(),
             fundamentalPadding = 8.dp,
             cardTileSize = (64 + 8).dp,
         ),
-        headerConfiguration = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.CardHeaderConfiguration(
+        headerConfiguration = CardHeaderConfiguration(
             headerHeight = 24.dp
         )
     )

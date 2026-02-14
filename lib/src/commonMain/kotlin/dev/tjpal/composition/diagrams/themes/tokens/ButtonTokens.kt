@@ -24,27 +24,27 @@ data class ButtonStateTokens(
 )
 
 data class ButtonCategoryTokens(
-    val flat: dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(),
-    val default: dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(),
-    val pressed: dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonStateTokens(),
+    val flat: ButtonStateTokens = ButtonStateTokens(),
+    val default: ButtonStateTokens = ButtonStateTokens(),
+    val pressed: ButtonStateTokens = ButtonStateTokens(),
 )
 
 data class ButtonTokens(
-    val primaryButton: dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens(),
-    val shyButton: dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens(),
-    val iconButton: dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens(),
-    val primaryText: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography(),
-    val defaultText: dev.tjpal.composition.diagrams.themes.tokens.Typography = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Typography()
+    val primaryButton: ButtonCategoryTokens = ButtonCategoryTokens(),
+    val shyButton: ButtonCategoryTokens = ButtonCategoryTokens(),
+    val iconButton: ButtonCategoryTokens = ButtonCategoryTokens(),
+    val primaryText: Typography = Typography(),
+    val defaultText: Typography = Typography()
 ) {
-    fun getButtonTheme(type: dev.tjpal.composition.diagrams.themes.tokens.ButtonType): dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens {
+    fun getButtonTheme(type: ButtonType): ButtonCategoryTokens {
         return when (type) {
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.PRIMARY -> primaryButton
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.DEFAULT -> primaryButton
-            _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.SHY -> shyButton
+            ButtonType.PRIMARY -> primaryButton
+            ButtonType.DEFAULT -> primaryButton
+            ButtonType.SHY -> shyButton
         }
     }
 
-    fun getIconButtonTheme(type: dev.tjpal.composition.diagrams.themes.tokens.ButtonType): dev.tjpal.composition.diagrams.themes.tokens.ButtonCategoryTokens {
+    fun getIconButtonTheme(type: ButtonType): ButtonCategoryTokens {
         return iconButton
     }
 }

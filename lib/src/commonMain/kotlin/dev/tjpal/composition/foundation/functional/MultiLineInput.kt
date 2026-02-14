@@ -30,6 +30,10 @@ import dev.tjpal.composition.foundation.text.Text
 import dev.tjpal.composition.diagrams.themes.tokens.TextType
 import dev.tjpal.composition.diagrams.themes.tokens.Theme
 import dev.tjpal.composition.foundation.functional.isSpecified
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.unit.Density
 
 /**
  * onValueChanged must be provided to receive updates when the text changes. Update the value accordingly.
@@ -46,13 +50,13 @@ fun MultiLineInput(
 ) {
     require(numVisibleLines >= 1) { "maxLines must be >= 1" }
 
-    val tokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.inputField
+    val tokens = Theme.current.inputField
     val typography = tokens.typography
     val contentPadding = tokens.contentPadding
 
     val density = LocalDensity.current
 
-    val desiredHeightDp = _root_ide_package_.dev.tjpal.composition.foundation.functional.calculateDesiredHeightDp(
+    val desiredHeightDp = calculateDesiredHeightDp(
         numVisibleLines,
         typography.style.lineHeight,
         tokens.rowHeightFallback,
@@ -86,9 +90,9 @@ fun MultiLineInput(
             onTextLayout = { textLayout -> lastLayout = textLayout }
         ) { innerTextField ->
             if (value.text.isEmpty() && !placeholder.isNullOrEmpty() && !isFocused) {
-                _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                Text(
                     text = placeholder,
-                    type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PLACEHOLDER
+                    type = TextType.PLACEHOLDER
                 )
             }
 
@@ -98,7 +102,7 @@ fun MultiLineInput(
 
     LaunchedEffect(lastLayout, value.selection, value.text, scrollState.maxValue, containerHeightPx) {
         val textLayout = lastLayout ?: return@LaunchedEffect
-        _root_ide_package_.dev.tjpal.composition.foundation.functional.ensureCaretVisible(
+        ensureCaretVisible(
             scrollState,
             textLayout,
             value,
@@ -130,7 +134,7 @@ fun MultiLineInput(
             val prevSelection = textFieldValueState.value.selection
             val selStart = prevSelection.start.coerceIn(0, value.length)
             val selEnd = prevSelection.end.coerceIn(0, value.length)
-            textFieldValueState.value = TextFieldValue(text = value, selection = androidx.compose.ui.text.TextRange(selStart, selEnd), composition = null)
+            textFieldValueState.value = TextFieldValue(text = value, selection = TextRange(selStart, selEnd), composition = null)
         }
     }
 
@@ -139,7 +143,7 @@ fun MultiLineInput(
         onValueChange(newValue.text)
     }
 
-    _root_ide_package_.dev.tjpal.composition.foundation.functional.MultiLineInput(
+    MultiLineInput(
         modifier = modifier,
         value = textFieldValueState.value,
         onValueChange = onTextFieldValueChanged,
@@ -154,8 +158,8 @@ private fun calculateDesiredHeightDp(
     maxLines: Int,
     lineHeight: TextUnit,
     fallbackLineHeightDp: Dp,
-    contentPadding: androidx.compose.foundation.layout.PaddingValues,
-    density: androidx.compose.ui.unit.Density
+    contentPadding: PaddingValues,
+    density: Density
 ): Dp {
     val lineHeightPx = with(density) {
         if (lineHeight.isSpecified()) lineHeight.toPx() else fallbackLineHeightDp.toPx()
@@ -170,12 +174,12 @@ private fun calculateDesiredHeightDp(
 }
 
 private suspend fun ensureCaretVisible(
-    scrollState: androidx.compose.foundation.ScrollState,
+    scrollState: ScrollState,
     layout: TextLayoutResult,
     value: TextFieldValue,
     containerHeightPx: Float,
-    contentPadding: androidx.compose.foundation.layout.PaddingValues,
-    density: androidx.compose.ui.unit.Density
+    contentPadding: PaddingValues,
+    density: Density
 ) {
     val caretOffset = value.selection.end.coerceIn(0, value.text.length)
 

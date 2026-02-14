@@ -28,7 +28,7 @@ import kotlin.math.sin
  */
 @Composable
 fun WaitingCircle(modifier: Modifier = Modifier) {
-    val tokens = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.waiting
+    val tokens = Theme.current.waiting
 
     val finalSize = tokens.size
     val finalDotSize =tokens.dotSize

@@ -10,8 +10,8 @@ import dev.tjpal.composition.diagrams.themes.tokens.WaitingTokens
  * doesn't require the shape shadow modifiers. If you want a neumorphic feeling, consumers
  * can apply the recommended modifiers to the containing surface.
  */
-fun waitingConfiguration(): dev.tjpal.composition.diagrams.themes.tokens.WaitingTokens {
-    return _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.WaitingTokens(
+fun waitingConfiguration(): WaitingTokens {
+    return WaitingTokens(
         size = 64.dp,
         dotSize = 10.dp,
         dotColor = Color(0xFF2B6FFF),

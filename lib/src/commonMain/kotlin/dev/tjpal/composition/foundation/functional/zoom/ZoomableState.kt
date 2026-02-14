@@ -42,9 +42,9 @@ data class ZoomConfig(
 )
 
 @Composable
-fun rememberZoomableState(config: dev.tjpal.composition.foundation.functional.zoom.ZoomConfig = _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.ZoomConfig()): dev.tjpal.composition.foundation.functional.zoom.ZoomableState {
+fun rememberZoomableState(config: ZoomConfig = ZoomConfig()): ZoomableState {
     return remember {
-        object : dev.tjpal.composition.foundation.functional.zoom.ZoomableState() {
+        object : ZoomableState() {
             private var internalScale by mutableStateOf(config.initialScale)
             private var internalOffset by mutableStateOf(Offset.Zero)
 
