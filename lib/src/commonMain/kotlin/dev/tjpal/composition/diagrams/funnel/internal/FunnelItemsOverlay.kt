@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import dev.tjpal.composition.diagrams.funnel.models.FunnelItem
 import dev.tjpal.composition.diagrams.funnel.utilities.mapIndicesToCellRect
-import dev.tjpal.composition.foundation.basics.text.Text
-import dev.tjpal.composition.foundation.themes.tokens.FunnelTokens
+import dev.tjpal.composition.foundation.text.Text
+import dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
@@ -40,7 +40,7 @@ internal fun FunnelItemsOverlay(
     subStagesPerStage: Int,
     categories: Int,
     containerSize: Size,
-    tokens: FunnelTokens,
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens,
     onItemClick: (FunnelItem) -> Unit
 ) {
     val density = LocalDensity.current
@@ -139,7 +139,7 @@ internal fun FunnelItemsOverlay(
                         }
                         .then(tokens.tooltipShapeModifier)
                 ) {
-                    Text(label)
+                    dev.tjpal.composition.foundation.text.Text(label)
                 }
             }
         }

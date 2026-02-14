@@ -15,12 +15,12 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import dev.tjpal.composition.diagrams.scatter.models.ScatterEntry
-import dev.tjpal.composition.foundation.themes.tokens.ScatterTokens
+import dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
 
 @Composable
 fun <T> ScatterPoint(
     entry: ScatterEntry<T>,
-    tokens: ScatterTokens,
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens,
     onClick: (ScatterEntry<T>) -> Unit = {},
     onHoverChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier

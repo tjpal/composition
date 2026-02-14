@@ -1,0 +1,2 @@
+# Theme "Cascade"
+"Cascade" is an instance of the abstract design tokens. It represents a theme and a complete design system. For each set of design tokens an actual instantiation must be created in the corresponding configuration file.

@@ -9,16 +9,16 @@ import androidx.compose.ui.platform.LocalDensity
 import dev.tjpal.composition.diagrams.scatter.models.DiagramRange
 import dev.tjpal.composition.diagrams.scatter.models.ScatterEntry
 import dev.tjpal.composition.diagrams.scatter.utilities.mapToPixel
-import dev.tjpal.composition.foundation.basics.text.Text
-import dev.tjpal.composition.foundation.themes.tokens.ScatterTokens
-import dev.tjpal.composition.foundation.themes.tokens.TextType
+import dev.tjpal.composition.foundation.text.Text
+import dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
+import dev.tjpal.composition.diagrams.themes.tokens.TextType
 
 @Composable
 internal fun <T> ScatterTooltipOverlay(
     highlighted: ScatterEntry<T>,
     range: DiagramRange,
     containerSize: Size,
-    tokens: ScatterTokens
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
 ) {
     if (containerSize.width <= 0f || containerSize.height <= 0f) {
         return
@@ -34,7 +34,7 @@ internal fun <T> ScatterTooltipOverlay(
         Box(
             modifier = tokens.tooltipShapeModifier
         ) {
-            Text(
+            dev.tjpal.composition.foundation.text.Text(
                 text = highlighted.label ?: "-",
                 type = TextType.DEFAULT
             )

@@ -23,38 +23,31 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import dev.tjpal.composition.diagrams.funnel.FunnelDiagramPreview
 import dev.tjpal.composition.diagrams.scatter.ScatterDiagramPreview
-import dev.tjpal.composition.foundation.basics.functional.Button
-import dev.tjpal.composition.foundation.basics.functional.FloatingBar
-import dev.tjpal.composition.foundation.basics.functional.Input
-import dev.tjpal.composition.foundation.basics.functional.MultiLineInput
-import dev.tjpal.composition.foundation.basics.functional.WaitingCircle
-import dev.tjpal.composition.foundation.basics.text.Link
-import dev.tjpal.composition.foundation.basics.text.Text
-import dev.tjpal.composition.foundation.structure.Pager
-import dev.tjpal.composition.foundation.structure.Table
-import dev.tjpal.composition.foundation.structure.TableColum
-import dev.tjpal.composition.foundation.structure.TableGroup
-import dev.tjpal.composition.foundation.structure.cards.CardTwoSlots
-import dev.tjpal.composition.foundation.structure.graphs.Connector
-import dev.tjpal.composition.foundation.structure.graphs.EdgeSide
-import dev.tjpal.composition.foundation.structure.graphs.EdgeSpec
-import dev.tjpal.composition.foundation.structure.graphs.GraphEditor
-import dev.tjpal.composition.foundation.structure.graphs.GraphState
-import dev.tjpal.composition.foundation.structure.graphs.NodeSpec
-import dev.tjpal.composition.foundation.templates.FloatingBarTemplate
-import dev.tjpal.composition.foundation.themes.cascade.Cascade
-import dev.tjpal.composition.foundation.themes.tokens.ButtonType
-import dev.tjpal.composition.foundation.themes.tokens.FloatingBarLocation
-import dev.tjpal.composition.foundation.themes.tokens.FloatingBarOrientation
-import dev.tjpal.composition.foundation.themes.tokens.NodeShape
-import dev.tjpal.composition.foundation.themes.tokens.TextType
-import dev.tjpal.composition.foundation.themes.tokens.Theme
-import dev.tjpal.composition.foundation.utilities.zoom.InitialScaleMode
+import dev.tjpal.composition.foundation.functional.Button
+import dev.tjpal.composition.foundation.functional.FloatingBar
+import dev.tjpal.composition.foundation.functional.Input
+import dev.tjpal.composition.foundation.functional.MultiLineInput
+import dev.tjpal.composition.foundation.functional.WaitingCircle
+import dev.tjpal.composition.foundation.text.Link
+import dev.tjpal.composition.foundation.text.Text
+import dev.tjpal.composition.structure.Pager
+import dev.tjpal.composition.structure.Table
+import dev.tjpal.composition.structure.TableColum
+import dev.tjpal.composition.structure.TableGroup
+import dev.tjpal.composition.structure.cards.CardTwoSlots
+import dev.tjpal.composition.structure.graphs.Connector
+import dev.tjpal.composition.structure.graphs.EdgeSide
+import dev.tjpal.composition.structure.graphs.EdgeSpec
+import dev.tjpal.composition.structure.graphs.GraphEditor
+import dev.tjpal.composition.structure.graphs.GraphState
+import dev.tjpal.composition.structure.graphs.NodeSpec
+import dev.tjpal.composition.templates.FloatingBarTemplate
+import dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun GalleryScreen(content: @Composable () -> Unit) {
-    Box(modifier = Modifier.background(Theme.current.background).fillMaxSize(),
+    Box(modifier = Modifier.background(_root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.Theme.current.background).fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         content()
@@ -69,29 +62,29 @@ fun GraphEditorDemoScreen() {
         listOf(
             NodeSpec(
                 id = "A",
-                shape = NodeShape.CIRCLE,
+                shape = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.CIRCLE,
                 initialPosition = Offset(80f, 160f),
                 widthMultiplier = 3,
                 heightMultiplier = 3,
                 connectors = listOf(Connector("A1", EdgeSide.RIGHT, 1, allowsMultipleConnections = true), Connector("A2", EdgeSide.RIGHT, 0)),
                 onTap = { println("Tapped node A") }
-            ) { id -> Text(id) },
+            ) { id -> _root_ide_package_.dev.tjpal.composition.foundation.text.Text(id) },
             NodeSpec(
                 id = "B",
-                shape = NodeShape.LEFT_ROUNDED,
+                shape = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.LEFT_ROUNDED,
                 widthMultiplier = 2,
                 heightMultiplier = 2,
                 initialPosition = Offset(160f, 160f),
                 connectors = listOf(Connector("B1", EdgeSide.TOP, 1), Connector("B2", EdgeSide.TOP, 2)),
                 onTap = { println("Tapped node B") }
-            ) { id -> Text(id) },
+            ) { id -> _root_ide_package_.dev.tjpal.composition.foundation.text.Text(id) },
             NodeSpec(
                 id = "C",
-                shape = NodeShape.RIGHT_ROUNDED,
+                shape = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.NodeShape.RIGHT_ROUNDED,
                 initialPosition = Offset(280f, 120f),
                 connectors = listOf(Connector("C1", EdgeSide.LEFT, 0), Connector("C2", EdgeSide.TOP, 1)),
                 onTap = { println("Tapped node C") }
-            ) { id -> Text(id) },
+            ) { id -> _root_ide_package_.dev.tjpal.composition.foundation.text.Text(id) },
         )
     }
 
@@ -140,7 +133,7 @@ fun GraphEditorDemoScreen() {
             edges = dynEdgeList.value,
             gridSpacing = gridSpacing,
             gridExtension = 2000f,
-            initialScaleMode = InitialScaleMode.DEFAULT,
+            initialScaleMode = _root_ide_package_.dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode.DEFAULT,
             onConnect = onConnected,
             onDisconnect = onDisconnected
         )
@@ -149,46 +142,50 @@ fun GraphEditorDemoScreen() {
 
 @Composable
 fun Gallery() {
-    Cascade {
+    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.Cascade {
         GalleryScreen {
-            Column(horizontalAlignment = Alignment.CenterHorizontally,
-                   modifier = Modifier.verticalScroll(rememberScrollState())
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
-                Button(type = ButtonType.PRIMARY) {
-                    Text("Primary Button", type = TextType.PRIMARY)
+                _root_ide_package_.dev.tjpal.composition.foundation.functional.Button(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.PRIMARY) {
+                    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                        "Primary Button",
+                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY
+                    )
                 }
 
                 FunnelDiagramPreview()
                 ScatterDiagramPreview()
 
-                WaitingCircle()
+                _root_ide_package_.dev.tjpal.composition.foundation.functional.WaitingCircle()
 
                 FloatingBarTemplate(
                     modifier = Modifier.width(1024.dp).height(768.dp),
-                    location = FloatingBarLocation.BOTTOM,
+                    location = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarLocation.BOTTOM,
                     barInset = 8.dp,
                     bandThickness = 64.dp,
                     floatingBar = {
-                        FloatingBar(
+                        _root_ide_package_.dev.tjpal.composition.foundation.functional.FloatingBar(
                             buttonExtent = 64.dp,
-                            orientation = FloatingBarOrientation.HORIZONTAL
+                            orientation = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.FloatingBarOrientation.HORIZONTAL
                         ) {
                             group {
                                 item {
-                                    Button(type = ButtonType.SHY) {
-                                        Text("A")
+                                    _root_ide_package_.dev.tjpal.composition.foundation.functional.Button(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.SHY) {
+                                        _root_ide_package_.dev.tjpal.composition.foundation.text.Text("A")
                                     }
                                 }
                                 item {
-                                    Button(type = ButtonType.SHY) {
-                                        Text("B")
+                                    _root_ide_package_.dev.tjpal.composition.foundation.functional.Button(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.SHY) {
+                                        _root_ide_package_.dev.tjpal.composition.foundation.text.Text("B")
                                     }
                                 }
                             }
                             group {
                                 item {
-                                    Button(type = ButtonType.SHY) {
-                                        Text("C")
+                                    _root_ide_package_.dev.tjpal.composition.foundation.functional.Button(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.SHY) {
+                                        _root_ide_package_.dev.tjpal.composition.foundation.text.Text("C")
                                     }
                                 }
                             }
@@ -201,22 +198,30 @@ fun Gallery() {
 
 
                 Spacer(modifier = Modifier.height(32.dp))
-                Button(type = ButtonType.DEFAULT) {
-                    Text("Default Button", type = TextType.DEFAULT)
+                _root_ide_package_.dev.tjpal.composition.foundation.functional.Button(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.DEFAULT) {
+                    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                        "Default Button",
+                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT
+                    )
                 }
                 Spacer(modifier = Modifier.height(32.dp))
-                Button(type = ButtonType.SHY) {
-                    Text("Shy Button", type = TextType.DEFAULT)
+                _root_ide_package_.dev.tjpal.composition.foundation.functional.Button(type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.ButtonType.SHY) {
+                    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                        "Shy Button",
+                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Spacer(modifier = Modifier.height(32.dp))
-                Input(modifier = Modifier.height(32.dp).width(200.dp), placeholder = "Enter text")
+                _root_ide_package_.dev.tjpal.composition.foundation.functional.Input(
+                    modifier = Modifier.height(32.dp).width(200.dp), placeholder = "Enter text"
+                )
                 Spacer(modifier = Modifier.height(32.dp))
 
                 var text by remember { mutableStateOf("") }
-                MultiLineInput(
+                _root_ide_package_.dev.tjpal.composition.foundation.functional.MultiLineInput(
                     modifier = Modifier.width(400.dp),
                     value = text,
                     onValueChange = { newText ->
@@ -234,31 +239,43 @@ fun Gallery() {
                     ),
                     3
                 ) { columnIndex, rowIndex ->
-                    Text("Cell $columnIndex-$rowIndex", type = TextType.DEFAULT)
+                    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                        "Cell $columnIndex-$rowIndex",
+                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(32.dp))
-                Pager(Modifier.width(200.dp).height(100.dp), listOf(
-                    { Text("Page 1") },
-                    { Text("Page 2") },
-                    { Text("Page 3") }
+                Pager(
+                    Modifier.width(200.dp).height(100.dp), listOf(
+                    { _root_ide_package_.dev.tjpal.composition.foundation.text.Text("Page 1") },
+                    { _root_ide_package_.dev.tjpal.composition.foundation.text.Text("Page 2") },
+                    { _root_ide_package_.dev.tjpal.composition.foundation.text.Text("Page 3") }
                 ))
 
                 Spacer(modifier = Modifier.height(32.dp))
                 val headerText = remember { mutableStateOf("Header") }
                 CardTwoSlots(
                     headerSlot = {
-                        Text(headerText.value, type = TextType.PRIMARY)
+                        _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                            headerText.value,
+                            type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.PRIMARY
+                        )
                     },
                     contentSlot = {
-                        Text("Content", type = TextType.DEFAULT)
+                        _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                            "Content",
+                            type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT
+                        )
                     },
                     onClick = { headerText.value = "Clicked" }
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
                 val linkText = remember { mutableStateOf("Link") }
-                Link(linkText.value, onClick = { linkText.value = "Clicked" })
+                _root_ide_package_.dev.tjpal.composition.foundation.text.Link(
+                    linkText.value,
+                    onClick = { linkText.value = "Clicked" })
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Table(
@@ -273,7 +290,10 @@ fun Gallery() {
                         TableGroup("Group 2", 2),
                     )
                 ) { groupIndex, columnIndex, rowIndex ->
-                    Text("Cell $groupIndex-$columnIndex-$rowIndex", type = TextType.DEFAULT)
+                    _root_ide_package_.dev.tjpal.composition.foundation.text.Text(
+                        "Cell $groupIndex-$columnIndex-$rowIndex",
+                        type = _root_ide_package_.dev.tjpal.composition.diagrams.themes.tokens.TextType.DEFAULT
+                    )
                 }
             }
         }

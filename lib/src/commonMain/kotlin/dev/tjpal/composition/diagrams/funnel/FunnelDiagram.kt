@@ -10,7 +10,7 @@ import androidx.compose.ui.geometry.Size
 import dev.tjpal.composition.diagrams.funnel.internal.FunnelGridCanvas
 import dev.tjpal.composition.diagrams.funnel.internal.FunnelItemsOverlay
 import dev.tjpal.composition.diagrams.funnel.models.FunnelItem
-import dev.tjpal.composition.foundation.themes.tokens.Theme
+import dev.tjpal.composition.diagrams.themes.tokens.Theme
 
 @Composable
 fun FunnelDiagram(
@@ -21,7 +21,7 @@ fun FunnelDiagram(
     items: List<FunnelItem>,
     onItemClick: (FunnelItem) -> Unit = {}
 ) {
-    val tokens = Theme.current.funnel
+    val tokens = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.funnel
 
     BoxWithConstraints(modifier = modifier.background(tokens.background)) {
         var containerSize = Size(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat())

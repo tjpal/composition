@@ -5,7 +5,7 @@ import dev.tjpal.composition.diagrams.funnel.internal.computePlacedItems
 import dev.tjpal.composition.diagrams.funnel.models.FunnelItem
 import dev.tjpal.composition.diagrams.svg.SvgBuilder
 import dev.tjpal.composition.diagrams.svg.toSvgColor
-import dev.tjpal.composition.foundation.themes.tokens.FunnelTokens
+import dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens
 
 fun exportFunnelDiagramToSvg(
     items: List<FunnelItem>,
@@ -13,7 +13,7 @@ fun exportFunnelDiagramToSvg(
     subStagesPerStage: Int,
     categories: Int,
     containerSize: Size,
-    tokens: FunnelTokens,
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens,
     tooltipProvider: (FunnelItem) -> String? = { it.label },
     linkProvider: (FunnelItem) -> String? = { null }
 ): String {

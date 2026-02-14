@@ -6,13 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import dev.tjpal.composition.foundation.themes.tokens.FunnelTokens
+import dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens
 
 private fun DrawScope.drawInnerSeparators(
     canvasSize: Size,
     totalSubStages: Int,
     categories: Int,
-    tokens: FunnelTokens
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens
 ) {
     // Vertical separator within a stage (thin)
     for (i in 0..totalSubStages) {
@@ -39,7 +39,7 @@ private fun DrawScope.drawInnerSeparators(
     }
 }
 
-private fun DrawScope.drawStageSeparators(canvasSize: Size, stages: Int, tokens: FunnelTokens) {
+private fun DrawScope.drawStageSeparators(canvasSize: Size, stages: Int, tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens) {
     for (i in 0..stages) {
         val x = (i.toFloat() / stages) * canvasSize.width
 
@@ -58,7 +58,7 @@ internal fun FunnelGridCanvas(
     stages: Int,
     subStagesPerStage: Int,
     categories: Int,
-    tokens: FunnelTokens
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.FunnelTokens
 ) {
     if (stages <= 0 || subStagesPerStage <= 0 || categories <= 0) {
         return

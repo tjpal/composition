@@ -14,7 +14,7 @@ import dev.tjpal.composition.diagrams.scatter.internal.ScatterTickLabels
 import dev.tjpal.composition.diagrams.scatter.internal.ScatterTooltipOverlay
 import dev.tjpal.composition.diagrams.scatter.models.DiagramRange
 import dev.tjpal.composition.diagrams.scatter.models.ScatterEntry
-import dev.tjpal.composition.foundation.themes.tokens.Theme
+import dev.tjpal.composition.diagrams.themes.tokens.Theme
 
 @Composable
 fun <T> ScatterDiagram(
@@ -26,7 +26,7 @@ fun <T> ScatterDiagram(
     onPointClick: (ScatterEntry<T>) -> Unit = {},
     onPointHover: (ScatterEntry<T>?) -> Unit = {}
 ) {
-    val tokens = Theme.current.scatter
+    val tokens = dev.tjpal.composition.diagrams.themes.tokens.Theme.current.scatter
 
     BoxWithConstraints(modifier = modifier.background(tokens.background).fillMaxSize()) {
         var containerSize = Size(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat())

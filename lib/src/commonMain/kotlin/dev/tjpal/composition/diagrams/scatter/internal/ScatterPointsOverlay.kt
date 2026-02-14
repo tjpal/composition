@@ -11,14 +11,14 @@ import dev.tjpal.composition.diagrams.scatter.ScatterPoint
 import dev.tjpal.composition.diagrams.scatter.models.DiagramRange
 import dev.tjpal.composition.diagrams.scatter.models.ScatterEntry
 import dev.tjpal.composition.diagrams.scatter.utilities.mapToPixel
-import dev.tjpal.composition.foundation.themes.tokens.ScatterTokens
+import dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens
 
 @Composable
 internal fun <T> ScatterPointsOverlay(
     entries: List<ScatterEntry<T>>,
     range: DiagramRange,
     containerSize: Size,
-    tokens: ScatterTokens,
+    tokens: dev.tjpal.composition.diagrams.themes.tokens.ScatterTokens,
     onPointClick: (ScatterEntry<T>) -> Unit,
     onHoverChange: (String?) -> Unit
 ) {

@@ -9,8 +9,8 @@ import androidx.compose.ui.unit.dp
 import dev.tjpal.composition.diagrams.scatter.models.DiagramRange
 import dev.tjpal.composition.diagrams.scatter.utilities.formatTick
 import dev.tjpal.composition.diagrams.scatter.utilities.mapToPixel
-import dev.tjpal.composition.foundation.basics.text.Text
-import dev.tjpal.composition.foundation.themes.tokens.TextType
+import dev.tjpal.composition.foundation.text.Text
+import dev.tjpal.composition.diagrams.themes.tokens.TextType
 
 @Composable
 internal fun ScatterTickLabels(
@@ -38,7 +38,7 @@ internal fun ScatterTickLabels(
     ticksX.forEach { value ->
         val position = mapToPixel(range, containerSize, 0f, 0f, value, range.minY)
 
-        Text(
+        dev.tjpal.composition.foundation.text.Text(
             text = formatTick(value),
             type = TextType.DEFAULT,
             modifier = Modifier.offset(
@@ -51,7 +51,7 @@ internal fun ScatterTickLabels(
     ticksY.forEach { value ->
         val position = mapToPixel(range, containerSize, 0f, 0f, range.minX, value)
 
-        Text(
+        dev.tjpal.composition.foundation.text.Text(
             text = formatTick(value),
             type = TextType.DEFAULT,
             modifier = Modifier.offset(
