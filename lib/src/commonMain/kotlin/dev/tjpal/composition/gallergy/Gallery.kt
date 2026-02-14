@@ -23,13 +23,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import dev.tjpal.composition.diagrams.funnel.FunnelDiagramPreview
 import dev.tjpal.composition.diagrams.scatter.ScatterDiagramPreview
-import dev.tjpal.composition.foundation.functional.Button
-import dev.tjpal.composition.foundation.functional.FloatingBar
-import dev.tjpal.composition.foundation.functional.Input
-import dev.tjpal.composition.foundation.functional.MultiLineInput
-import dev.tjpal.composition.foundation.functional.WaitingCircle
-import dev.tjpal.composition.foundation.text.Link
-import dev.tjpal.composition.foundation.text.Text
+import dev.tjpal.composition.diagrams.themes.cascade.Cascade
 import dev.tjpal.composition.structure.Pager
 import dev.tjpal.composition.structure.Table
 import dev.tjpal.composition.structure.TableColum
@@ -42,7 +36,6 @@ import dev.tjpal.composition.structure.graphs.GraphEditor
 import dev.tjpal.composition.structure.graphs.GraphState
 import dev.tjpal.composition.structure.graphs.NodeSpec
 import dev.tjpal.composition.templates.FloatingBarTemplate
-import dev.tjpal.composition.foundation.functional.zoom.InitialScaleMode
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
@@ -142,7 +135,7 @@ fun GraphEditorDemoScreen() {
 
 @Composable
 fun Gallery() {
-    _root_ide_package_.dev.tjpal.composition.diagrams.themes.cascade.Cascade {
+    Cascade {
         GalleryScreen {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
